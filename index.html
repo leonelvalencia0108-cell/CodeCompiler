@@ -14,7 +14,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', // Activamos el Modo Oscuro por clases
+            darkMode: 'class', 
             theme: {
                 extend: {
                     animation: {
@@ -46,14 +46,13 @@
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
         
-        /* Estilos para el enlace activo del menú */
         .nav-link.active {
             color: #000;
             font-weight: 700;
             border-bottom: 2px solid #000;
         }
 
-        /* --- MODO OSCURO (NEGRO PURO Y ABSOLUTO) --- */
+        /* --- MODO OSCURO --- */
         html.dark body { background-color: #000000; color: #e5e5e5; }
         html.dark .bg-white { background-color: #0a0a0a !important; border-color: #262626 !important; }
         html.dark .bg-gray-50 { background-color: #000000 !important; border-color: #262626 !important; }
@@ -65,14 +64,10 @@
         html.dark .border-gray-100, html.dark .border-gray-200, html.dark .border-gray-300 { border-color: #262626 !important; }
         html.dark input, html.dark textarea, html.dark select { background-color: #000000 !important; color: #ffffff !important; border-color: #262626 !important; }
         html.dark #navbar { background-color: rgba(0, 0, 0, 0.9) !important; border-bottom-color: #262626 !important; }
-        
-        /* Adaptar botones negros a Azul Tecnológico en Dark Mode */
         html.dark .bg-black { background-color: #3b82f6 !important; color: #ffffff !important; border-color: #3b82f6 !important; }
         html.dark .hover\:bg-gray-900:hover, html.dark .hover\:bg-gray-800:hover { background-color: #2563eb !important; }
         html.dark .border-black { border-color: #3b82f6 !important; }
         html.dark .nav-link.active { color: #3b82f6 !important; border-bottom-color: #3b82f6 !important; }
-        
-        /* Excepciones de Dark Mode */
         html.dark .cookie-card { background-color: #0a0a0a !important; border-color: #262626 !important; }
         html.dark .cookieHeading { color: #ffffff !important; }
         html.dark #cookieSvg g path { fill: #a3a3a3 !important; }
@@ -96,7 +91,6 @@
             border-radius: 1.5rem;
             border: 2px solid #000000; 
         }
-
         #cookieSvg { width: 50px; }
         #cookieSvg g path { fill: rgb(97, 81, 81); }
         .cookieHeading { font-size: 1.2em; font-weight: 800; color: rgb(26, 26, 26); }
@@ -110,7 +104,6 @@
         /* --- Estilos del Loader Global --- */
         #global-loader { transition: opacity 0.5s ease-out, visibility 0.5s ease-out; }
         #global-loader.hidden-loader { opacity: 0; visibility: hidden; pointer-events: none; }
-        
         .loader {
           --color-one: #ffbf48; --color-two: #be4a1d; --color-three: #ffbf4780; --color-four: #bf4a1d80; --color-five: #ffbf4740;
           --time-animation: 2s; --size: 1; position: relative; border-radius: 50%; transform: scale(var(--size));
@@ -137,7 +130,6 @@
         .loader svg #clipping polygon:nth-child(5) { transform-origin: 40% 40%; animation: rotation var(--time-animation) linear infinite reverse; animation-delay: calc(var(--time-animation) / -2); }
         .loader svg #clipping polygon:nth-child(6) { transform-origin: 60% 40%; animation: rotation var(--time-animation) linear infinite; }
         .loader svg #clipping polygon:nth-child(7) { transform-origin: 60% 40%; animation: rotation var(--time-animation) linear infinite; animation-delay: calc(var(--time-animation) / -1.5); }
-        
         @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes roundness { 0%, 60%, 100% { filter: contrast(15); } 20%, 40% { filter: contrast(3); } }
         @keyframes colorize { 0%, 100% { filter: hue-rotate(0deg); } 20% { filter: hue-rotate(-30deg); } 40% { filter: hue-rotate(-60deg); } 60% { filter: hue-rotate(-90deg); } 80% { filter: hue-rotate(-45deg); } }
@@ -739,7 +731,6 @@
                     <p id="auth-subtitle" class="text-sm text-gray-500 font-medium mt-2">Accede al panel de control de tu proyecto.</p>
                 </div>
                 
-                <!-- Contenedor de Error de Auth -->
                 <div id="auth-error-box" class="hidden bg-red-50 border-l-4 border-red-500 p-4 mb-6 rounded-r-lg">
                     <div class="flex">
                         <div class="flex-shrink-0"><i data-lucide="alert-circle" class="h-5 w-5 text-red-500"></i></div>
@@ -778,6 +769,34 @@
                     <span id="auth-switch-text" class="text-gray-500 font-medium">¿Eres cliente nuevo?</span>
                     <a href="javascript:void(0)" onclick="setAuthMode(authMode === 'login' ? 'register' : 'login')" id="auth-switch-link" class="font-black text-black hover:underline ml-1">Regístrate aquí</a>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Promocional (Upselling Plan Profesional) -->
+    <div id="promo-modal-overlay" onclick="if(event.target === this) closePromoModal()" class="hidden fixed inset-0 z-[115] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-fade-in-up">
+        <div class="bg-white dark:bg-gray-900 w-full max-w-md rounded-3xl shadow-2xl relative border border-gray-200 dark:border-gray-700 overflow-hidden">
+            <button onclick="closePromoModal()" class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
+            <div class="p-8 sm:p-10 text-center">
+                <div class="mx-auto w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center rounded-full mb-6 shadow-inner">
+                    <i data-lucide="rocket" class="w-8 h-8"></i>
+                </div>
+                <h2 class="text-2xl font-black mb-2 text-gray-900 dark:text-white">¡Potencia tu Proyecto!</h2>
+                <p class="text-gray-600 dark:text-gray-400 font-medium mb-6">Actualmente tienes el plan <span class="font-bold text-gray-900 dark:text-white">Gratuito</span>. Cambia al plan Recomendado para obtener un servidor VPS optimizado y soporte prioritario.</p>
+                
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-5 mb-6 border border-gray-200 dark:border-gray-700 text-left">
+                    <h4 class="text-xs font-black text-gray-500 uppercase tracking-widest mb-3 text-center">Plan Profesional</h4>
+                    <ul class="space-y-2 mb-0">
+                        <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Servidor VPS Optimizado</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> Seguridad Anti-DDoS</li>
+                        <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300"><i data-lucide="check" class="w-4 h-4 text-green-500"></i> 2 Horas de Mantenimiento al mes</li>
+                    </ul>
+                </div>
+                
+                <button onclick="closePromoModal(); openCheckoutModal('Profesional', '1,899');" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 transition-colors shadow-lg flex justify-center items-center gap-2">
+                    <i data-lucide="zap" class="w-5 h-5"></i> Actualizar Ahora
+                </button>
+                <button onclick="closePromoModal()" class="mt-5 text-sm font-bold text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Quizás más tarde</button>
             </div>
         </div>
     </div>
@@ -1070,7 +1089,6 @@
             }
         }
         
-        // Iniciar tema de inmediato
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             setTheme('dark');
         } else {
@@ -1078,7 +1096,7 @@
         }
 
         // ==========================================
-        // CONTROL DEL LOADER GLOBAL (SEGURO)
+        // CONTROL DEL LOADER GLOBAL
         // ==========================================
         const globalLoader = document.getElementById('global-loader');
         function showLoader() { if(globalLoader) globalLoader.classList.remove('hidden-loader'); }
@@ -1087,7 +1105,7 @@
         setTimeout(hideLoader, 2500);
 
         function updateIcons() {
-            try { if (typeof lucide !== 'undefined') lucide.createIcons(); } catch (e) { console.warn('Lucide no listo'); }
+            try { if (typeof lucide !== 'undefined') lucide.createIcons(); } catch (e) {}
         }
         updateIcons();
 
@@ -1101,7 +1119,7 @@
             if (typeof window.supabase !== 'undefined') {
                 supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
             }
-        } catch(e) { console.error("Error al cargar Supabase.", e); }
+        } catch(e) {}
 
         // ==========================================
         // UI & NAVEGACIÓN
@@ -1348,6 +1366,24 @@
         }
 
         // ==========================================
+        // LÓGICA DE ALGORITMO PROMOCIONAL (UPSELLING)
+        // ==========================================
+        function showPromoModal() {
+            try {
+                const overlay = document.getElementById('promo-modal-overlay');
+                if(overlay) overlay.classList.remove('hidden');
+                updateIcons();
+            } catch(e) {}
+        }
+        
+        function closePromoModal() {
+            try {
+                const overlay = document.getElementById('promo-modal-overlay');
+                if(overlay) overlay.classList.add('hidden');
+            } catch(e) {}
+        }
+
+        // ==========================================
         // CHECKOUT LÓGICA (VENTANA COMPRAS)
         // ==========================================
         function openCheckoutModal(planName, price) {
@@ -1578,7 +1614,6 @@
 
         async function loadUserProfile() {
             try {
-                // Recuperar la sesión real o simulada
                 let sessionData = null;
                 
                 if (supabaseClient) {
@@ -1647,7 +1682,6 @@
                         if (error && !String(error.message).includes('API key') && !String(error.message).includes('Fetch')) throw error;
                     }
 
-                    // Actualizar sesión simulada
                     let demoSession = localStorage.getItem('demo_session');
                     if (demoSession) {
                         let parsed = JSON.parse(demoSession);
@@ -1663,7 +1697,6 @@
                     btn.classList.replace('bg-black', 'bg-green-600');
                     updateIcons();
                     
-                    // Refrescar UI visual (Menú y Modal)
                     if (supabaseClient) {
                         const { data: { session } } = await supabaseClient.auth.getSession();
                         if(session) updateAuthUI(session);
@@ -1716,7 +1749,6 @@
                             servicio: document.getElementById('servicio').value,
                             mensaje: document.getElementById('mensaje').value
                         }]);
-                        // Ignorar errores de clave inválida para mantener la demo funcionando
                         if (error && !String(error.message).includes('API key') && !String(error.message).includes('Fetch')) throw error;
                     }
                     
@@ -1876,9 +1908,8 @@
                             resError = error;
                         }
                         
-                        // FALLBACK: Si la llave API está mal puesta, forzamos un éxito en local para no romper la web
                         if (resError && (String(resError).includes('API key') || String(resError.message).includes('API key') || String(resError.message).includes('JWT') || String(resError.message).includes('Fetch'))) {
-                            console.warn("Simulando inicio de sesión (La API Key provista es inválida)...");
+                            console.warn("Simulando inicio de sesión...");
                             resError = null;
                             if (authMode !== 'recover') {
                                 const simSession = { user: { email: email, user_metadata: { full_name: name || email } } };
@@ -1889,7 +1920,6 @@
                             throw resError;
                         }
                     } else {
-                        // Modo 100% Offline
                         if (authMode !== 'recover') {
                             const simSession = { user: { email: email, user_metadata: { full_name: name || email } } };
                             localStorage.setItem('demo_session', JSON.stringify(simSession));
@@ -1937,7 +1967,7 @@
         }
 
         // ==========================================
-        // PERSISTENCIA Y SESIÓN AUTOMÁTICA
+        // PERSISTENCIA, SESIÓN Y ALGORITMO PROMOCIONAL
         // ==========================================
         function updateAuthUI(session) {
             try {
@@ -1961,6 +1991,16 @@
                     if(mls) mls.classList.add('hidden');
                     if(mus) mus.classList.remove('hidden');
                     if(mue) mue.textContent = displayName;
+                    
+                    // --- ALGORITMO PROMOCIONAL (UPSELLING) ---
+                    const currentPlan = localStorage.getItem('userPurchasedPlan') || 'Gratuito';
+                    if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
+                        setTimeout(() => {
+                            showPromoModal();
+                            sessionStorage.setItem('promoShown', 'true');
+                        }, 1500);
+                    }
+                    
                 } else {
                     const nlb = document.getElementById('nav-login-btn');
                     const nup = document.getElementById('nav-user-profile');
