@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CodeCompiler - Servicios Digitales</title>
     
+    <!-- Favicon -->
+    <link rel="icon" href="https://i.ibb.co/PzGRVs4c/rounded-square.png">
+    
     <!-- Fuentes de Google: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,13 +165,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <a href="#inicio" class="nav-scroll-link flex items-center gap-2 cursor-pointer">
-                    <i data-lucide="code" class="h-8 w-8 text-black dark:text-white"></i>
+                    <img src="https://i.ibb.co/PzGRVs4c/rounded-square.png" alt="CodeCompiler Logo" class="h-8 w-auto object-contain rounded">
                     <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">CodeCompiler</span>
                 </a>
                 
                 <div class="hidden md:flex space-x-8 h-full items-center">
                     <a href="#servicios" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Servicios</a>
-                    <a href="#proyectos" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Proyectos</a>
                     <a href="#suscripciones" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Planes</a>
                     <a href="#beneficios" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Beneficios</a>
                 </div>
@@ -211,7 +213,6 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-[#262626] absolute w-full shadow-2xl animate-fade-in-up z-40">
             <div class="px-4 pt-2 pb-6 space-y-1 shadow-inner h-screen overflow-y-auto pb-32">
                 <a href="#servicios" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Servicios</a>
-                <a href="#proyectos" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Proyectos</a>
                 <a href="#suscripciones" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Planes de Hosting</a>
                 <a href="#beneficios" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Beneficios</a>
                 <a href="#contacto" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Contacto</a>
@@ -275,13 +276,20 @@
     </section>
 
     <!-- Banner Tecnologías -->
-    <div class="border-y border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-[#0a0a0a] py-6 sm:py-8 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center items-center gap-6 sm:gap-8 md:gap-16 text-gray-400 font-bold tracking-widest text-xs sm:text-sm uppercase">
-            <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="code" class="w-4 h-4"></i> HTML5/React</span>
-            <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="terminal" class="w-4 h-4"></i> JavaScript</span>
-            <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="layers" class="w-4 h-4"></i> Tailwind CSS</span>
-            <span class="hover:text-black dark:hover:text-white transition-colors cursor-default hidden sm:flex items-center gap-1"><i data-lucide="rocket" class="w-4 h-4"></i> Node.js</span>
-            <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> Supabase</span>
+    <div class="border-y border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-[#0a0a0a] py-8 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-6">Lenguajes de programación con los que trabajamos</p>
+            <div class="flex flex-wrap justify-center items-center gap-5 sm:gap-6 md:gap-10 text-gray-400 font-bold tracking-widest text-xs sm:text-sm uppercase">
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="terminal" class="w-4 h-4"></i> JavaScript / TS</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="file-json" class="w-4 h-4"></i> Python</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="coffee" class="w-4 h-4"></i> Java / Kotlin</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="smartphone" class="w-4 h-4"></i> Swift / Dart</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="cpu" class="w-4 h-4"></i> C++ / C#</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="box" class="w-4 h-4"></i> Go / Rust</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="server" class="w-4 h-4"></i> PHP / Ruby</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="database" class="w-4 h-4"></i> SQL / NoSQL</span>
+                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="code" class="w-4 h-4"></i> HTML & CSS</span>
+            </div>
         </div>
     </div>
 
@@ -348,29 +356,6 @@
                         <i data-lucide="gift" class="w-5 h-5"></i> Ver Demo Invitación
                     </button>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Proyectos Destacados Section -->
-    <section id="proyectos" class="py-20 bg-white dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-[#262626] scroll-mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-                <div>
-                    <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Portafolio</span>
-                    <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Trabajos Recientes</h2>
-                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl">Un vistazo a algunos de los proyectos y soluciones funcionales que he desarrollado para mis clientes.</p>
-                </div>
-                <div class="flex gap-2 overflow-x-auto pb-2 md:pb-0 hide-scrollbar" id="filter-container">
-                    <button data-filter="Todos" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap bg-black dark:bg-blue-600 text-white shadow-md transform scale-105">Todos</button>
-                    <button data-filter="Web" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap bg-gray-100 dark:bg-[#171717] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#262626]">Web</button>
-                    <button data-filter="Sistemas" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap bg-gray-100 dark:bg-[#171717] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#262626]">Sistemas</button>
-                    <button data-filter="Invitaciones" class="filter-btn px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 whitespace-nowrap bg-gray-100 dark:bg-[#171717] text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-[#262626]">Invitaciones</button>
-                </div>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="projects-grid">
-                <!-- JS Inject -->
             </div>
         </div>
     </section>
@@ -610,7 +595,7 @@
     <footer class="bg-black py-16 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex items-center gap-2 text-white">
-                <i data-lucide="code" class="h-8 w-8 text-white"></i>
+                <img src="https://i.ibb.co/PzGRVs4c/rounded-square.png" alt="CodeCompiler Logo" class="h-8 w-auto object-contain rounded">
                 <span class="font-black text-2xl tracking-tight">CodeCompiler</span>
             </div>
             <p class="text-gray-400 font-medium text-center md:text-left">Creando experiencias digitales excepcionales en México y el mundo.</p>
@@ -1095,56 +1080,6 @@
                 if(iconClose) iconClose.classList.toggle('hidden');
             } catch(e) {}
         }
-
-        // ==========================================
-        // PROYECTOS DINÁMICOS
-        // ==========================================
-        const projectsData = [
-            { id: 1, title: 'Tienda Online Minimalista', type: 'Web', imgText: '[E-commerce UI]' },
-            { id: 2, title: 'CRM Inmobiliario', type: 'Sistemas', imgText: '[Dashboard UI]' },
-            { id: 3, title: 'Boda Ana & Luis', type: 'Invitaciones', imgText: '[Mobile Invitation]' },
-            { id: 4, title: 'Blog Corporativo', type: 'Web', imgText: '[Editorial UI]' },
-        ];
-        
-        function renderProjects(filter = 'Todos') {
-            try {
-                const grid = document.getElementById('projects-grid');
-                if(!grid) return;
-                grid.innerHTML = '';
-                const filtered = filter === 'Todos' ? projectsData : projectsData.filter(p => p.type === filter);
-                filtered.forEach(project => {
-                    grid.innerHTML += `
-                        <div class="group relative rounded-3xl overflow-hidden bg-gray-100 dark:bg-[#171717] aspect-[4/3] cursor-pointer shadow-sm hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-[#262626] animate-fade-in-up">
-                            <div class="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-[#171717] dark:to-[#262626] flex flex-col items-center justify-center text-gray-500 group-hover:scale-110 transition-transform duration-700 ease-out">
-                                <i data-lucide="globe" class="w-10 h-10 mb-2 opacity-50"></i>
-                                <span class="font-bold tracking-widest uppercase text-sm">${project.imgText}</span>
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 flex flex-col justify-end p-8 transition-opacity duration-300">
-                                <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                                    <span class="text-white/70 text-xs font-black uppercase tracking-widest block mb-2">${project.type}</span>
-                                    <h3 class="text-white text-2xl font-bold flex items-center gap-2">${project.title} <i data-lucide="arrow-up-right" class="w-5 h-5 text-gray-300"></i></h3>
-                                </div>
-                            </div>
-                        </div>`;
-                });
-                updateIcons();
-            } catch (e) {}
-        }
-        renderProjects();
-
-        try {
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('.filter-btn').forEach(b => {
-                        b.classList.remove('bg-black', 'dark:bg-blue-600', 'text-white', 'shadow-md', 'transform', 'scale-105');
-                        b.classList.add('bg-gray-100', 'dark:bg-[#171717]', 'text-gray-600', 'dark:text-gray-400');
-                    });
-                    e.target.classList.remove('bg-gray-100', 'dark:bg-[#171717]', 'text-gray-600', 'dark:text-gray-400');
-                    e.target.classList.add('bg-black', 'dark:bg-blue-600', 'text-white', 'shadow-md', 'transform', 'scale-105');
-                    renderProjects(e.target.dataset.filter);
-                });
-            });
-        } catch(e) {}
 
         // ==========================================
         // GESTIÓN DE MÉTODO DE PAGO EN PERFIL
