@@ -80,7 +80,6 @@
         /* Estilos del Cartel de Cookies */
         .cookie-card {
             width: 300px;
-            height: 220px;
             background-color: rgb(255, 255, 255);
             display: flex;
             flex-direction: column;
@@ -89,18 +88,15 @@
             padding: 20px 30px;
             gap: 13px;
             position: relative;
-            overflow: hidden;
             box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
             border-radius: 1.5rem;
             border: 2px solid #000000; 
         }
-        #cookieSvg { width: 50px; }
-        #cookieSvg g path { fill: rgb(97, 81, 81); }
         .cookieHeading { font-size: 1.2em; font-weight: 800; color: rgb(26, 26, 26); }
-        .cookieDescription { text-align: center; font-size: 0.7em; font-weight: 600; color: rgb(99, 99, 99); }
-        .buttonContainer { display: flex; gap: 20px; flex-direction: row; }
-        .acceptButton { width: 80px; height: 30px; background-color: #7b57ff; transition-duration: .2s; border: none; color: rgb(241, 241, 241); cursor: pointer; font-weight: 600; border-radius: 20px; }
-        .declineButton { width: 80px; height: 30px; background-color: rgb(218, 218, 218); transition-duration: .2s; color: rgb(46, 46, 46); border: none; cursor: pointer; font-weight: 600; border-radius: 20px; }
+        .cookieDescription { text-align: center; font-size: 0.8em; font-weight: 600; color: rgb(99, 99, 99); }
+        .buttonContainer { display: flex; gap: 20px; flex-direction: row; width: 100%; justify-content: center; }
+        .acceptButton { width: 100%; max-width: 100px; height: 35px; background-color: #7b57ff; transition-duration: .2s; border: none; color: rgb(241, 241, 241); cursor: pointer; font-weight: 600; border-radius: 20px; }
+        .declineButton { width: 100%; max-width: 100px; height: 35px; background-color: rgb(218, 218, 218); transition-duration: .2s; color: rgb(46, 46, 46); border: none; cursor: pointer; font-weight: 600; border-radius: 20px; }
         .declineButton:hover { background-color: #ebebeb; }
         .acceptButton:hover { background-color: #9173ff; }
 
@@ -161,10 +157,10 @@
     </div>
 
     <!-- Navegación -->
-    <nav id="navbar" class="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <header id="navbar" class="bg-white/80 backdrop-blur-lg shadow-sm border-b border-gray-100 sticky top-0 z-50 transition-all duration-300">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
-                <a href="#inicio" class="nav-scroll-link flex items-center gap-2 cursor-pointer">
+                <a href="#inicio" class="nav-scroll-link flex items-center gap-2 cursor-pointer" aria-label="Ir al inicio">
                     <img src="https://i.ibb.co/PzGRVs4c/rounded-square.png" alt="CodeCompiler Logo" class="h-8 w-auto object-contain rounded">
                     <span class="font-bold text-xl tracking-tight text-gray-900 dark:text-white">CodeCompiler</span>
                 </a>
@@ -172,6 +168,7 @@
                 <div class="hidden md:flex space-x-8 h-full items-center">
                     <a href="#servicios" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Servicios</a>
                     <a href="#suscripciones" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Planes</a>
+                    <a href="#cotizador" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Simulador</a>
                     <a href="#beneficios" class="nav-link nav-scroll-link text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white font-medium transition-colors py-5">Beneficios</a>
                 </div>
                 
@@ -202,18 +199,20 @@
                 </div>
 
                 <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 dark:text-gray-300 hover:text-black focus:outline-none p-2 z-50">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Menú de navegación" class="text-gray-600 dark:text-gray-300 hover:text-black focus:outline-none p-2 z-50">
                         <i data-lucide="menu" id="menu-icon-open" class="h-6 w-6"></i>
                         <i data-lucide="x" id="menu-icon-close" class="h-6 w-6 hidden"></i>
                     </button>
                 </div>
             </div>
-        </div>
+        </nav>
 
+        <!-- Menú Móvil -->
         <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-[#262626] absolute w-full shadow-2xl animate-fade-in-up z-40">
             <div class="px-4 pt-2 pb-6 space-y-1 shadow-inner h-screen overflow-y-auto pb-32">
                 <a href="#servicios" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Servicios</a>
                 <a href="#suscripciones" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Planes de Hosting</a>
+                <a href="#cotizador" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Simulador de Precios</a>
                 <a href="#beneficios" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Beneficios</a>
                 <a href="#contacto" class="mobile-link nav-scroll-link block px-3 py-4 border-b border-gray-50 dark:border-[#171717] rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-black hover:bg-gray-50 dark:hover:bg-[#171717]">Contacto</a>
                 
@@ -241,357 +240,572 @@
                 </div>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section id="inicio" class="relative bg-white dark:bg-[#000000] overflow-hidden scroll-mt-20">
-        <div class="absolute inset-0 bg-white dark:bg-[#000000] -z-20"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] -z-10"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center lg:pt-32 lg:pb-36 animate-fade-in-up">
-            <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-[#171717] text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 shadow-sm">
-                <span class="animate-pulse inline-block mr-1">👋</span> Transformando ideas en código
-            </div>
+    <main>
+        <!-- Hero Section -->
+        <section id="inicio" class="relative bg-white dark:bg-[#000000] overflow-hidden scroll-mt-20">
+            <div class="absolute inset-0 bg-white dark:bg-[#000000] -z-20"></div>
+            <div class="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#171717_1px,transparent_1px),linear-gradient(to_bottom,#171717_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] -z-10"></div>
             
-            <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-6 flex flex-col items-center">
-                <span>Desarrollo de</span>
-                <span class="inline-flex items-center justify-center mt-2 min-h-[40px] md:min-h-[48px] lg:min-h-[72px]">
-                    <span id="typewriter-text" class="text-transparent bg-clip-text bg-gradient-to-r from-gray-700 via-black to-gray-700 dark:from-blue-400 dark:via-blue-300 dark:to-blue-500 italic"></span>
-                    <span class="w-1 md:w-1.5 lg:w-2 h-8 md:h-10 lg:h-16 bg-black dark:bg-white ml-1 md:ml-2 animate-pulse"></span>
-                </span>
-            </h1>
-
-            <p class="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-10 px-2 leading-relaxed">
-                Desde sitios web profesionales y sistemas complejos, hasta creativas invitaciones digitales para tus eventos más especiales. Transformamos tus ideas en realidad.
-            </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
-                <a href="#contacto" class="nav-scroll-link flex items-center justify-center gap-2 bg-black dark:bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-900 dark:hover:bg-blue-700 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 w-full sm:w-auto">
-                    Iniciar un Proyecto <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                </a>
-                <a href="#servicios" class="nav-scroll-link flex items-center justify-center gap-2 bg-white dark:bg-[#0a0a0a] text-black dark:text-white border-2 border-gray-200 dark:border-[#262626] px-8 py-4 rounded-xl text-lg font-bold hover:border-black dark:hover:border-white hover:bg-gray-50 dark:hover:bg-[#171717] hover:-translate-y-1 hover:shadow-md transition-all duration-300 w-full sm:w-auto">
-                    Ver Servicios
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Banner Tecnologías -->
-    <div class="border-y border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-[#0a0a0a] py-8 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-6">Lenguajes de programación con los que trabajamos</p>
-            <div class="flex flex-wrap justify-center items-center gap-5 sm:gap-6 md:gap-10 text-gray-400 font-bold tracking-widest text-xs sm:text-sm uppercase">
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="terminal" class="w-4 h-4"></i> JavaScript / TS</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="file-json" class="w-4 h-4"></i> Python</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="coffee" class="w-4 h-4"></i> Java / Kotlin</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="smartphone" class="w-4 h-4"></i> Swift / Dart</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="cpu" class="w-4 h-4"></i> C++ / C#</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="box" class="w-4 h-4"></i> Go / Rust</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="server" class="w-4 h-4"></i> PHP / Ruby</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="database" class="w-4 h-4"></i> SQL / NoSQL</span>
-                <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="code" class="w-4 h-4"></i> HTML & CSS</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Servicios Section -->
-    <section id="servicios" class="py-20 bg-gray-50 dark:bg-[#000000] scroll-mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 animate-fade-in-up">
-                <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Soluciones</span>
-                <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">¿Qué puedo hacer por ti?</h2>
-                <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Servicios especializados en desarrollo de software para cubrir todas tus necesidades digitales con los más altos estándares.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Servicio 1 -->
-                <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-[#262626] flex flex-col h-full group">
-                    <div class="w-14 h-14 bg-gray-50 dark:bg-[#171717] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-[#262626] group-hover:bg-black dark:group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="globe" class="w-8 h-8 transition-colors duration-300"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Páginas Web</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Diseño y desarrollo de sitios web corporativos, landing pages y tiendas online. Rápidas, seguras y optimizadas.</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Diseño Responsivo</li>
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Optimización SEO</li>
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Dominio y Hosting Integrado</li>
-                    </ul>
-                    <button onclick="openModal('web')" class="w-full py-3 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all duration-300 flex items-center justify-center gap-2 mt-auto">
-                        <i data-lucide="shopping-cart" class="w-5 h-5"></i> Ver Demo Tienda
-                    </button>
-                </div>
-
-                <!-- Servicio 2 -->
-                <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-[#262626] relative overflow-hidden flex flex-col h-full group transform md:-translate-y-2">
-                    <div class="absolute top-0 inset-x-0 h-1 bg-black dark:bg-blue-600"></div>
-                    <div class="absolute top-6 right-6 bg-black dark:bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">POPULAR</div>
-                    
-                    <div class="w-14 h-14 bg-gray-50 dark:bg-[#171717] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-[#262626] group-hover:bg-black dark:group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="code" class="w-8 h-8 transition-colors duration-300"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Software a Medida</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Programas a la medida de tu negocio. Sistemas de inventario, facturación, CRM y automatización de procesos internos.</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Paneles de Administración</li>
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Bases de Datos Seguras</li>
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Integración con APIs externas</li>
-                    </ul>
-                    <button onclick="openModal('system')" class="w-full py-3 px-4 bg-black dark:bg-blue-600 text-white rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-blue-700 shadow-lg transition-all duration-300 flex items-center justify-center gap-2 mt-auto">
-                        <i data-lucide="bar-chart-3" class="w-5 h-5"></i> Ver Demo Dashboard
-                    </button>
-                </div>
-
-                <!-- Servicio 3 -->
-                <div class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-[#262626] flex flex-col h-full group">
-                    <div class="w-14 h-14 bg-gray-50 dark:bg-[#171717] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-[#262626] group-hover:bg-black dark:group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                        <i data-lucide="party-popper" class="w-8 h-8 transition-colors duration-300"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Invitaciones Digitales</h3>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Sorprende a tus invitados con invitaciones web interactivas para cumpleaños, bodas o eventos. ¡Ecológicas y elegantes!</p>
-                    <ul class="space-y-3 mb-8">
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Confirmación de Asistencia</li>
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Cuenta regresiva y Mapas</li>
-                        <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Galería de Fotos y Música</li>
-                    </ul>
-                    <button onclick="openModal('invitation')" class="w-full py-3 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all duration-300 flex items-center justify-center gap-2 mt-auto">
-                        <i data-lucide="gift" class="w-5 h-5"></i> Ver Demo Invitación
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Metodología -->
-    <section class="py-20 bg-gray-50 dark:bg-[#000000] border-t border-gray-100 dark:border-[#262626]">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Metodología</span>
-                <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Nuestro Proceso</h2>
-                <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Transparencia y comunicación constante en cada etapa del desarrollo para asegurar el éxito del proyecto.</p>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 relative">
-                <div class="hidden md:block absolute top-1/4 left-[10%] w-[80%] h-0.5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 z-0 dark:from-[#171717] dark:via-[#333333] dark:to-[#171717]"></div>
-                
-                <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up">
-                    <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform rotate-3">
-                        <i data-lucide="message-square" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 1</span>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Descubrimiento</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Análisis profundo de tu idea, objetivos comerciales y requerimientos.</p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 text-center lg:pt-32 lg:pb-36 animate-fade-in-up">
+                <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-[#171717] text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-300 shadow-sm">
+                    <span class="animate-pulse inline-block mr-1">👋</span> Transformando ideas en código
                 </div>
                 
-                <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up" style="animation-delay: 100ms;">
-                    <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform -rotate-3">
-                        <i data-lucide="layers" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 2</span>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Diseño (UI/UX)</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Creación de prototipos visuales interactivos para que apruebes el aspecto final.</p>
-                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-6 flex flex-col items-center">
+                    <span>Desarrollo de</span>
+                    <span class="inline-flex items-center justify-center mt-2 min-h-[40px] md:min-h-[48px] lg:min-h-[72px]">
+                        <span id="typewriter-text" class="text-transparent bg-clip-text bg-gradient-to-r from-gray-700 via-black to-gray-700 dark:from-blue-400 dark:via-blue-300 dark:to-blue-500 italic"></span>
+                        <span class="w-1 md:w-1.5 lg:w-2 h-8 md:h-10 lg:h-16 bg-black dark:bg-white ml-1 md:ml-2 animate-pulse"></span>
+                    </span>
+                </h1>
 
-                <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up" style="animation-delay: 200ms;">
-                    <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform rotate-3">
-                        <i data-lucide="terminal" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 3</span>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Desarrollo</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Programación con código limpio, seguro, optimizado y altamente escalable.</p>
+                <p class="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-600 dark:text-gray-400 mb-10 px-2 leading-relaxed">
+                    Desde sitios web profesionales y sistemas complejos, hasta creativas invitaciones digitales para tus eventos más especiales. Transformamos tus ideas en realidad.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
+                    <a href="#contacto" class="nav-scroll-link flex items-center justify-center gap-2 bg-black dark:bg-blue-600 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-900 dark:hover:bg-blue-700 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 w-full sm:w-auto">
+                        Iniciar un Proyecto <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </a>
+                    <a href="#servicios" class="nav-scroll-link flex items-center justify-center gap-2 bg-white dark:bg-[#0a0a0a] text-black dark:text-white border-2 border-gray-200 dark:border-[#262626] px-8 py-4 rounded-xl text-lg font-bold hover:border-black dark:hover:border-white hover:bg-gray-50 dark:hover:bg-[#171717] hover:-translate-y-1 hover:shadow-md transition-all duration-300 w-full sm:w-auto">
+                        Ver Servicios
+                    </a>
                 </div>
+            </div>
+        </section>
 
-                <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up" style="animation-delay: 300ms;">
-                    <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform -rotate-3">
-                        <i data-lucide="rocket" class="w-7 h-7"></i>
-                    </div>
-                    <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 4</span>
-                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Lanzamiento</h3>
-                    <p class="text-gray-600 dark:text-gray-400 text-sm">Despliegue de tu proyecto en servidores de producción y capacitación.</p>
+        <!-- Banner Tecnologías -->
+        <div class="border-y border-gray-200 dark:border-[#262626] bg-gray-50 dark:bg-[#0a0a0a] py-8 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-xs font-bold tracking-widest text-gray-500 uppercase mb-6">Lenguajes de programación con los que trabajamos</p>
+                <div class="flex flex-wrap justify-center items-center gap-5 sm:gap-6 md:gap-10 text-gray-400 font-bold tracking-widest text-xs sm:text-sm uppercase">
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="terminal" class="w-4 h-4"></i> JavaScript / TS</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="file-json" class="w-4 h-4"></i> Python</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="coffee" class="w-4 h-4"></i> Java / Kotlin</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="smartphone" class="w-4 h-4"></i> Swift / Dart</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="cpu" class="w-4 h-4"></i> C++ / C#</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="box" class="w-4 h-4"></i> Go / Rust</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="server" class="w-4 h-4"></i> PHP / Ruby</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="database" class="w-4 h-4"></i> SQL / NoSQL</span>
+                    <span class="hover:text-black dark:hover:text-white transition-colors cursor-default flex items-center gap-1"><i data-lucide="code" class="w-4 h-4"></i> HTML & CSS</span>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Suscripciones -->
-    <section id="suscripciones" class="py-20 bg-white dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-[#262626] scroll-mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Mantenimiento</span>
-                <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Planes de Hosting</h2>
-                <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Asegura que tu proyecto esté siempre en línea, cargue rápido y esté protegido contra ataques cibernéticos.</p>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
-                <!-- Plan Básico -->
-                <div class="bg-white dark:bg-[#171717] rounded-3xl p-8 border border-gray-200 dark:border-[#262626] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full animate-fade-in-up">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Básico</h3>
-                    <p class="text-gray-500 text-sm mb-6 h-10">Ideal para landing pages sencillas y portafolios estáticos.</p>
-                    <div class="mb-6 pb-6 border-b border-gray-100 dark:border-[#262626]">
-                        <span class="text-5xl font-black text-black dark:text-white">$1,299</span>
-                        <span class="text-gray-500 font-bold"> MXN/mes</span>
-                    </div>
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Hosting Compartido Veloz</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Certificado SSL Gratuito</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">1 Respaldo de seguridad al mes</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Soporte por correo (24-48h)</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Analíticas básicas de visitas</span></li>
-                    </ul>
-                    <a href="#" id="link-basico" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Básico')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contratar Plan Básico</a>
+        <!-- Servicios Section -->
+        <section id="servicios" class="py-20 bg-gray-50 dark:bg-[#000000] scroll-mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 animate-fade-in-up">
+                    <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Soluciones</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">¿Qué puedo hacer por ti?</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Servicios especializados en desarrollo de software para cubrir todas tus necesidades digitales con los más altos estándares.</p>
                 </div>
-                
-                <!-- Plan Profesional -->
-                <div class="bg-black dark:bg-[#171717] rounded-3xl p-8 border border-gray-800 dark:border-blue-500 shadow-2xl relative transform md:scale-105 z-10 hover:-translate-y-2 transition-transform duration-300 ring-4 ring-gray-100 dark:ring-blue-900/30 flex flex-col h-full animate-fade-in-up" style="animation-delay: 100ms;">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"><span class="bg-white text-black text-xs font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg border border-gray-200">Recomendado</span></div>
-                    <h3 class="text-2xl font-bold text-white mb-2 mt-2">Profesional</h3>
-                    <p class="text-gray-400 text-sm mb-6 h-10">Para tiendas online, plataformas y webs corporativas dinámicas.</p>
-                    <div class="mb-6 pb-6 border-b border-gray-800 dark:border-[#262626]">
-                        <span class="text-5xl font-black text-white">$3,499</span>
-                        <span class="text-gray-400 font-bold"> MXN/mes</span>
-                    </div>
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white shrink-0"></i> <span class="text-sm text-gray-300 font-medium">Servidor VPS Privado y Optimizado</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white shrink-0"></i> <span class="text-sm text-gray-300 font-medium">Seguridad Anti-DDoS y SSL Premium</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white shrink-0"></i> <span class="text-sm text-gray-300 font-medium">Respaldos Semanales Automáticos</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white shrink-0"></i> <span class="text-sm text-gray-300 font-medium">CDN Integrado (Carga Ultrarrápida)</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white shrink-0"></i> <span class="text-sm text-gray-300 font-medium">Soporte Prioritario (Chat/Email)</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white shrink-0"></i> <span class="text-sm text-white font-bold bg-gray-800 dark:bg-blue-600 px-2 py-0.5 rounded">3 horas de mantenimiento/mes</span></li>
-                    </ul>
-                    <a href="#" id="link-profesional" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Profesional')" class="block w-full py-4 px-4 bg-white text-black rounded-xl font-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform hover:scale-[1.02] text-center mt-auto">Contratar Profesional</a>
-                </div>
-                
-                <!-- Plan Enterprise -->
-                <div class="bg-white dark:bg-[#171717] rounded-3xl p-8 border border-gray-200 dark:border-[#262626] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full animate-fade-in-up" style="animation-delay: 200ms;">
-                    <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Enterprise</h3>
-                    <p class="text-gray-500 text-sm mb-6 h-10">Sistemas a medida de alta demanda y bases de datos grandes.</p>
-                    <div class="mb-6 pb-6 border-b border-gray-100 dark:border-[#262626]">
-                        <span class="text-5xl font-black text-black dark:text-white">$9,999</span>
-                        <span class="text-gray-500 font-bold"> MXN/mes</span>
-                    </div>
-                    <ul class="space-y-4 mb-8 flex-grow">
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Servidor Dedicado (Máximo Rendimiento)</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Monitoreo de Uptime 24/7 (SLA 99.9%)</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Soporte VIP 24/7 vía WhatsApp</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Respaldos Diarios y Recuperación</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Consultoría Técnica (1h/mes)</span></li>
-                        <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-900 dark:text-white font-bold bg-yellow-200 dark:bg-blue-900/40 px-2 py-0.5 rounded">Resolución ilimitada de bugs</span></li>
-                    </ul>
-                    <a href="#" id="link-enterprise" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Enterprise')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contactar Ventas</a>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Beneficios -->
-    <section id="beneficios" class="py-20 bg-gray-50 dark:bg-[#000000] border-t border-gray-100 dark:border-[#262626] scroll-mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-black dark:bg-[#0a0a0a] dark:border dark:border-[#262626] rounded-[2.5rem] overflow-hidden shadow-2xl relative animate-fade-in-up">
-                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gray-800 via-black to-black opacity-60"></div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 relative z-10">
-                    <div class="p-10 sm:p-16 lg:p-20 flex flex-col justify-center">
-                        <span class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-4 block">Diferenciador</span>
-                        <h2 class="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight">¿Por qué trabajar conmigo?</h2>
-                        <p class="text-gray-400 mb-10 text-lg leading-relaxed">Mi enfoque va más allá de solo escribir código. Analizo tu modelo de negocio para crear soluciones tecnológicas hermosas, escalables y funcionales que realmente ayuden a automatizar tus procesos y aumentar tus ventas.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Servicio 1 -->
+                    <article class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-[#262626] flex flex-col h-full group">
+                        <div class="w-14 h-14 bg-gray-50 dark:bg-[#171717] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-[#262626] group-hover:bg-black dark:group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            <i data-lucide="globe" class="w-8 h-8 transition-colors duration-300"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Páginas Web</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Diseño y desarrollo de sitios web corporativos, landing pages y tiendas online. Rápidas, seguras y optimizadas.</p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Diseño Responsivo</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Optimización SEO</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Dominio y Hosting Integrado</li>
+                        </ul>
+                        <button onclick="openModal('web')" class="w-full py-3 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all duration-300 flex items-center justify-center gap-2 mt-auto">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i> Ver Demo Tienda
+                        </button>
+                    </article>
+
+                    <!-- Servicio 2 -->
+                    <article class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 shadow-md hover:shadow-2xl transition-all duration-300 border border-gray-200 dark:border-[#262626] relative overflow-hidden flex flex-col h-full group transform md:-translate-y-2">
+                        <div class="absolute top-0 inset-x-0 h-1 bg-black dark:bg-blue-600"></div>
+                        <div class="absolute top-6 right-6 bg-black dark:bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">POPULAR</div>
                         
-                        <div class="space-y-8">
-                            <div class="flex gap-5">
-                                <div class="flex-shrink-0 w-14 h-14 bg-gray-800/80 backdrop-blur rounded-2xl flex items-center justify-center text-white border border-gray-700 shadow-inner">
-                                    <i data-lucide="timer" class="w-6 h-6 text-gray-300"></i>
-                                </div>
-                                <div><h4 class="text-white font-bold text-xl mb-1">Entregas Rápidas</h4><p class="text-gray-400 text-sm leading-relaxed">Uso metodologías ágiles y componentes reutilizables para que tengas tu proyecto a tiempo sin sacrificar la calidad.</p></div>
-                            </div>
-                            <div class="flex gap-5">
-                                <div class="flex-shrink-0 w-14 h-14 bg-gray-800/80 backdrop-blur rounded-2xl flex items-center justify-center text-white border border-gray-700 shadow-inner">
-                                    <i data-lucide="smartphone" class="w-6 h-6 text-gray-300"></i>
-                                </div>
-                                <div><h4 class="text-white font-bold text-xl mb-1">100% Mobile-First</h4><p class="text-gray-400 text-sm leading-relaxed">Todos los diseños se adaptan perfectamente a cualquier pantalla, dando prioridad a la experiencia en teléfonos celulares.</p></div>
-                            </div>
-                            <div class="flex gap-5">
-                                <div class="flex-shrink-0 w-14 h-14 bg-gray-800/80 backdrop-blur rounded-2xl flex items-center justify-center text-white border border-gray-700 shadow-inner">
-                                    <i data-lucide="shield-check" class="w-6 h-6 text-gray-300"></i>
-                                </div>
-                                <div><h4 class="text-white font-bold text-xl mb-1">Soporte y Garantía</h4><p class="text-gray-400 text-sm leading-relaxed">Te brindo acompañamiento continuo post-lanzamiento para asegurar que la plataforma funcione de maravilla en todo momento.</p></div>
-                            </div>
+                        <div class="w-14 h-14 bg-gray-50 dark:bg-[#171717] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-[#262626] group-hover:bg-black dark:group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            <i data-lucide="code" class="w-8 h-8 transition-colors duration-300"></i>
                         </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Software a Medida</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Programas a la medida de tu negocio. Sistemas de inventario, facturación, CRM y automatización de procesos internos.</p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Paneles de Administración</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Bases de Datos Seguras</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Integración con APIs externas</li>
+                        </ul>
+                        <button onclick="openModal('system')" class="w-full py-3 px-4 bg-black dark:bg-blue-600 text-white rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-blue-700 shadow-lg transition-all duration-300 flex items-center justify-center gap-2 mt-auto">
+                            <i data-lucide="bar-chart-3" class="w-5 h-5"></i> Ver Demo Dashboard
+                        </button>
+                    </article>
+
+                    <!-- Servicio 3 -->
+                    <article class="bg-white dark:bg-[#0a0a0a] rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-[#262626] flex flex-col h-full group">
+                        <div class="w-14 h-14 bg-gray-50 dark:bg-[#171717] rounded-2xl flex items-center justify-center mb-6 border border-gray-100 dark:border-[#262626] group-hover:bg-black dark:group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                            <i data-lucide="party-popper" class="w-8 h-8 transition-colors duration-300"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-3">Invitaciones Digitales</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Sorprende a tus invitados con invitaciones web interactivas para cumpleaños, bodas o eventos. ¡Ecológicas y elegantes!</p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Confirmación de Asistencia</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Cuenta regresiva y Mapas</li>
+                            <li class="flex items-center gap-3 text-sm text-gray-700 dark:text-gray-300 font-medium"><i data-lucide="check-circle-2" class="w-5 h-5 text-black dark:text-blue-500"></i> Galería de Fotos y Música</li>
+                        </ul>
+                        <button onclick="openModal('invitation')" class="w-full py-3 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-700 dark:text-gray-300 rounded-xl font-bold hover:border-black dark:hover:border-white hover:text-black dark:hover:text-white transition-all duration-300 flex items-center justify-center gap-2 mt-auto">
+                            <i data-lucide="gift" class="w-5 h-5"></i> Ver Demo Invitación
+                        </button>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Metodología -->
+        <section class="py-20 bg-gray-50 dark:bg-[#000000] border-t border-gray-100 dark:border-[#262626]">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Metodología</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Nuestro Proceso</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Transparencia y comunicación constante en cada etapa del desarrollo para asegurar el éxito del proyecto.</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 relative">
+                    <div class="hidden md:block absolute top-1/4 left-[10%] w-[80%] h-0.5 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 z-0 dark:from-[#171717] dark:via-[#333333] dark:to-[#171717]"></div>
+                    
+                    <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up">
+                        <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform rotate-3">
+                            <i data-lucide="message-square" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 1</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Descubrimiento</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Análisis profundo de tu idea, objetivos comerciales y requerimientos.</p>
                     </div>
-                    <div class="bg-gray-900 p-10 flex items-center justify-center min-h-[400px] border-l border-gray-800">
-                         <div class="relative w-full max-w-md aspect-square bg-black rounded-full border-[10px] border-gray-800 flex items-center justify-center shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] overflow-hidden">
-                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNykiLz48L3N2Zz4=')] opacity-50"></div>
-                            <div class="text-center p-8 relative z-10">
-                               <i data-lucide="terminal" class="w-24 h-24 text-gray-600 mx-auto mb-6 opacity-80"></i>
-                               <p class="text-gray-400 font-medium text-lg italic tracking-wide">"Convirtiendo café en código y problemas en soluciones."</p>
-                            </div>
-                         </div>
+                    
+                    <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up" style="animation-delay: 100ms;">
+                        <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform -rotate-3">
+                            <i data-lucide="layers" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 2</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Diseño (UI/UX)</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Creación de prototipos visuales interactivos para que apruebes el aspecto final.</p>
+                    </div>
+
+                    <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up" style="animation-delay: 200ms;">
+                        <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform rotate-3">
+                            <i data-lucide="terminal" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 3</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Desarrollo</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Programación con código limpio, seguro, optimizado y altamente escalable.</p>
+                    </div>
+
+                    <div class="relative z-10 bg-white dark:bg-[#0a0a0a] p-8 rounded-3xl border border-gray-100 dark:border-[#262626] shadow-sm text-center hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-fade-in-up" style="animation-delay: 300ms;">
+                        <div class="w-16 h-16 mx-auto bg-black text-white rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-gray-300 dark:shadow-none transform -rotate-3">
+                            <i data-lucide="rocket" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Paso 4</span>
+                        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Lanzamiento</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">Despliegue de tu proyecto en servidores de producción y capacitación.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="py-20 bg-gray-50 dark:bg-[#000000] scroll-mt-16">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-[#0a0a0a] border border-transparent dark:border-[#262626] rounded-[2rem] shadow-xl overflow-hidden animate-fade-in-up">
-                <div class="p-8 sm:p-14">
-                    <div class="text-center mb-12">
-                        <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Contacto</span>
-                        <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Cuéntame sobre tu proyecto</h2>
-                        <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Completa el formulario con los detalles y me pondré en contacto contigo lo antes posible para organizar una reunión gratuita.</p>
+        <!-- Suscripciones -->
+        <section id="suscripciones" class="py-20 bg-white dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-[#262626] scroll-mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Mantenimiento</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Planes de Hosting</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Asegura que tu proyecto esté siempre en línea, cargue rápido y esté protegido contra ataques cibernéticos.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto items-center">
+                    <!-- Plan Básico -->
+                    <div class="bg-white dark:bg-[#171717] rounded-3xl p-8 border border-gray-200 dark:border-[#262626] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full animate-fade-in-up">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Básico</h3>
+                        <p class="text-gray-500 text-sm mb-6 h-10">Ideal para landing pages sencillas y portafolios estáticos.</p>
+                        <div class="mb-6 pb-6 border-b border-gray-100 dark:border-[#262626]">
+                            <span id="plan-basico-price" class="text-5xl font-black text-black dark:text-white">$1,299</span>
+                            <span id="plan-basico-currency" class="text-gray-500 font-bold"> MXN/mes</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Hosting Compartido Veloz</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Certificado SSL Gratuito</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">1 Respaldo de seguridad al mes</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Soporte por correo (24-48h)</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Analíticas básicas de visitas</span></li>
+                        </ul>
+                        <a href="#" id="link-basico" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Básico')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contratar Plan Básico</a>
+                    </div>
+                    
+                    <!-- Plan Profesional -->
+                    <div class="bg-black dark:bg-[#171717] rounded-3xl p-8 border border-gray-800 dark:border-blue-500 shadow-2xl relative transform md:scale-105 z-10 hover:-translate-y-2 transition-transform duration-300 ring-4 ring-gray-100 dark:ring-blue-900/30 flex flex-col h-full animate-fade-in-up" style="animation-delay: 100ms;">
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2"><span class="bg-white text-black dark:bg-blue-600 dark:text-white text-xs font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg border border-gray-200 dark:border-blue-500">Recomendado</span></div>
+                        <h3 class="text-2xl font-bold text-white mb-2 mt-2">Profesional</h3>
+                        <p class="text-gray-400 dark:text-blue-200/90 text-sm mb-6 h-10">Para tiendas online, plataformas y webs corporativas dinámicas.</p>
+                        <div class="mb-6 pb-6 border-b border-gray-800 dark:border-[#262626]">
+                            <span id="plan-profesional-price" class="text-5xl font-black text-white">$3,499</span>
+                            <span id="plan-profesional-currency" class="text-gray-400 dark:text-blue-300/80 font-bold"> MXN/mes</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-gray-300 dark:text-white font-medium">Servidor VPS Privado y Optimizado</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-gray-300 dark:text-white font-medium">Seguridad Anti-DDoS y SSL Premium</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-gray-300 dark:text-white font-medium">Respaldos Semanales Automáticos</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-gray-300 dark:text-white font-medium">CDN Integrado (Carga Ultrarrápida)</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-gray-300 dark:text-white font-medium">Soporte Prioritario (Chat/Email)</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-white font-bold bg-gray-800 dark:bg-blue-600 px-2 py-0.5 rounded">3 horas de mantenimiento/mes</span></li>
+                        </ul>
+                        <a href="#" id="link-profesional" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Profesional')" class="block w-full py-4 px-4 bg-white text-black rounded-xl font-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform hover:scale-[1.02] text-center mt-auto">Contratar Profesional</a>
+                    </div>
+                    
+                    <!-- Plan Enterprise -->
+                    <div class="bg-white dark:bg-[#171717] rounded-3xl p-8 border border-gray-200 dark:border-[#262626] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full animate-fade-in-up" style="animation-delay: 200ms;">
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Enterprise</h3>
+                        <p class="text-gray-500 text-sm mb-6 h-10">Sistemas a medida de alta demanda y bases de datos grandes.</p>
+                        <div class="mb-6 pb-6 border-b border-gray-100 dark:border-[#262626]">
+                            <span id="plan-enterprise-price" class="text-5xl font-black text-black dark:text-white">$9,999</span>
+                            <span id="plan-enterprise-currency" class="text-gray-500 font-bold"> MXN/mes</span>
+                        </div>
+                        <ul class="space-y-4 mb-8 flex-grow">
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Servidor Dedicado (Máximo Rendimiento)</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Monitoreo de Uptime 24/7 (SLA 99.9%)</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Soporte VIP 24/7 vía WhatsApp</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Respaldos Diarios y Recuperación</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Consultoría Técnica (1h/mes)</span></li>
+                            <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-900 dark:text-white font-bold bg-yellow-200 dark:bg-blue-900/40 px-2 py-0.5 rounded">Resolución ilimitada de bugs</span></li>
+                        </ul>
+                        <a href="#" id="link-enterprise" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Enterprise')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contactar Ventas</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Cotizador Interactivo -->
+        <section id="cotizador" class="py-20 bg-white dark:bg-[#0a0a0a] border-t border-gray-100 dark:border-[#262626] scroll-mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 animate-fade-in-up">
+                    <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Simulador</span>
+                    <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Calcula tu Inversión</h2>
+                    <p class="mt-4 text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">Selecciona las características de tu proyecto para obtener un estimado de precio en tiempo real.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Opciones -->
+                    <div class="lg:col-span-2 space-y-10">
+                        
+                        <!-- Tipo de Proyecto -->
+                        <div class="animate-fade-in-up">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="layout-template" class="w-5 h-5 text-black dark:text-blue-500"></i> 1. Tipo de Proyecto</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_tipo" value="250" data-name="Página Web Informativa" class="peer sr-only" checked onchange="updateQuote()">
+                                    <div class="p-5 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-bold text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Web Informativa</span>
+                                            <i data-lucide="globe" class="w-5 h-5 text-gray-400 group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors"></i>
+                                        </div>
+                                        <p class="text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors leading-relaxed">Ideal para portafolios, negocios locales o landing pages.</p>
+                                    </div>
+                                </label>
+                                
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_tipo" value="600" data-name="Tienda Online (E-commerce)" class="peer sr-only" onchange="updateQuote()">
+                                    <div class="p-5 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-bold text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Tienda Online</span>
+                                            <i data-lucide="shopping-cart" class="w-5 h-5 text-gray-400 group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors"></i>
+                                        </div>
+                                        <p class="text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors leading-relaxed">Venta de productos con carrito y cobro en línea.</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_tipo" value="1250" data-name="Sistema a Medida / App" class="peer sr-only" onchange="updateQuote()">
+                                    <div class="p-5 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-bold text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Sistema a Medida</span>
+                                            <i data-lucide="code" class="w-5 h-5 text-gray-400 group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors"></i>
+                                        </div>
+                                        <p class="text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors leading-relaxed">Software completo para gestionar la lógica de tu negocio.</p>
+                                    </div>
+                                </label>
+
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_tipo" value="75" data-name="Invitación Digital" class="peer sr-only" onchange="updateQuote()">
+                                    <div class="p-5 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <div class="flex justify-between items-center mb-2">
+                                            <span class="font-bold text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Invitación Digital</span>
+                                            <i data-lucide="party-popper" class="w-5 h-5 text-gray-400 group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors"></i>
+                                        </div>
+                                        <p class="text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors leading-relaxed">Página interactiva para tus eventos sociales importantes.</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Funcionalidades Extra -->
+                        <div class="animate-fade-in-up" style="animation-delay: 100ms;">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="plus-circle" class="w-5 h-5 text-black dark:text-blue-500"></i> 2. Funcionalidades Extra</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="150" data-name="Cuentas de Usuario" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Cuentas de Usuario</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Login, registro y perfiles.</span>
+                                    </div>
+                                </label>
+                                
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="200" data-name="Pasarela de Pagos" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Pasarela de Pagos</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Integración con Stripe o PayPal.</span>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="250" data-name="Panel de Administración" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Panel Administrador</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Dashboard para gestionar contenido.</span>
+                                    </div>
+                                </label>
+
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="100" data-name="Multi-idioma" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Multi-idioma</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Soporte para 2 o más idiomas.</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Nivel de Diseño -->
+                        <div class="animate-fade-in-up" style="animation-delay: 150ms;">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="palette" class="w-5 h-5 text-black dark:text-blue-500"></i> 3. Nivel de Diseño</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_diseno" value="0" data-name="Plantilla Base" class="peer sr-only" checked onchange="updateQuote()">
+                                    <div class="p-4 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors mb-1">Plantilla Base</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Diseño limpio y adaptable basado en estructura predefinida.</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_diseno" value="200" data-name="Diseño Personalizado" class="peer sr-only" onchange="updateQuote()">
+                                    <div class="p-4 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors mb-1">Personalizado UI/UX</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Diseño a medida según la identidad visual de tu marca.</span>
+                                    </div>
+                                </label>
+                                <label class="cursor-pointer group">
+                                    <input type="radio" name="cot_diseno" value="400" data-name="Premium Interactivo" class="peer sr-only" onchange="updateQuote()">
+                                    <div class="p-4 h-full border-2 border-gray-200 dark:border-[#262626] rounded-2xl bg-gray-50 dark:bg-[#171717] peer-checked:border-black dark:peer-checked:border-blue-500 peer-checked:bg-white dark:peer-checked:bg-blue-900/20 peer-checked:shadow-md transition-all hover:border-gray-300 dark:hover:border-gray-700 group-hover:-translate-y-1">
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors mb-1">Premium (Animado)</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Experiencia de alto impacto con animaciones avanzadas (3D).</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Servicios Adicionales -->
+                        <div class="animate-fade-in-up" style="animation-delay: 200ms;">
+                            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><i data-lucide="sparkles" class="w-5 h-5 text-black dark:text-blue-500"></i> 4. Servicios Adicionales</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="125" data-name="Optimización SEO Avanzada" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">SEO Avanzado</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Posicionamiento en Google.</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="100" data-name="Redacción de Contenido" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Copywriting</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Textos persuasivos para ventas.</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="50" data-name="Botón de WhatsApp" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Chat WhatsApp</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Botón de contacto directo flotante.</span>
+                                    </div>
+                                </label>
+                                <label class="flex items-center gap-4 p-4 border-2 border-gray-200 dark:border-[#262626] rounded-xl cursor-pointer hover:bg-gray-50 dark:hover:bg-[#171717] transition-all group has-[:checked]:border-black dark:has-[:checked]:border-blue-500 has-[:checked]:bg-white dark:has-[:checked]:bg-blue-900/20 has-[:checked]:shadow-md">
+                                    <input type="checkbox" value="250" data-name="Entrega Express" class="cot-extra w-5 h-5 accent-black dark:accent-blue-500 rounded border-gray-300 focus:ring-black dark:focus:ring-blue-500" onchange="updateQuote()">
+                                    <div>
+                                        <span class="block font-bold text-sm text-gray-900 dark:text-white group-has-[:checked]:text-black dark:group-has-[:checked]:text-blue-400 transition-colors">Entrega Express</span>
+                                        <span class="block text-xs text-gray-500 group-has-[:checked]:text-gray-700 dark:group-has-[:checked]:text-blue-200 transition-colors">Prioridad máxima (1-2 semanas).</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div id="form-success-msg" class="hidden bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-900 dark:text-green-300 rounded-2xl p-8 text-center animate-fade-in-up">
-                        <div class="mx-auto w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-green-200 dark:shadow-none">
-                            <i data-lucide="check" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-2xl font-black mb-2">¡Mensaje Enviado con Éxito!</h3>
-                        <p class="font-medium">Gracias por contactarme. He recibido tu solicitud y te escribiré muy pronto al correo proporcionado.</p>
-                    </div>
-
-                    <form id="contact-form" class="space-y-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Nombre o Empresa</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="user" class="h-5 w-5 text-gray-400"></i></div>
-                                    <input type="text" id="nombre" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] text-gray-900 dark:text-white" placeholder="Ej. Juan Pérez">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Correo Electrónico</label>
-                                <div class="relative">
-                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="mail" class="h-5 w-5 text-gray-400"></i></div>
-                                    <input type="email" id="email" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] text-gray-900 dark:text-white" placeholder="tu@correo.com">
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">¿Qué servicio te interesa?</label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="layers" class="h-5 w-5 text-gray-400"></i></div>
-                                <select id="servicio" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] appearance-none text-gray-700 dark:text-gray-300">
-                                    <option value="" disabled selected>Selecciona una opción...</option>
-                                    <option value="web">Página Web / Tienda Online</option>
-                                    <option value="software">Software Personalizado / Sistema / CRM</option>
-                                    <option value="invitacion">Invitación Digital Interactiva</option>
-                                    <option value="otro">Mantenimiento u Otro proyecto</option>
+                    <!-- Resumen (Sticky) -->
+                    <div class="lg:col-span-1 animate-fade-in-up" style="animation-delay: 250ms;">
+                        <div class="sticky top-28 bg-black dark:bg-[#171717] rounded-[2rem] p-8 shadow-2xl text-white border border-transparent dark:border-[#262626]">
+                            <div class="flex justify-between items-center mb-6 border-b border-gray-800 dark:border-[#262626] pb-4">
+                                <h3 class="text-xl font-black">Resumen Estimado</h3>
+                                <select id="currency-selector" onchange="changeCurrency()" class="bg-gray-800 dark:bg-[#0a0a0a] border border-gray-700 dark:border-[#262626] text-white text-xs font-bold rounded-lg px-2 py-1.5 focus:ring-2 focus:ring-blue-500 cursor-pointer outline-none">
+                                    <option value="USD">🇺🇸 USD</option>
+                                    <option value="MXN">🇲🇽 MXN</option>
+                                    <option value="EUR">🇪🇺 EUR</option>
+                                    <option value="COP">🇨🇴 COP</option>
+                                    <option value="ARS">🇦🇷 ARS</option>
+                                    <option value="CLP">🇨🇱 CLP</option>
+                                    <option value="PEN">🇵🇪 PEN</option>
                                 </select>
                             </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Detalles del proyecto</label>
-                            <div class="relative">
-                                <div class="absolute top-4 left-4 pointer-events-none"><i data-lucide="message-square" class="h-5 w-5 text-gray-400"></i></div>
-                                <textarea id="mensaje" rows="5" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] text-gray-900 dark:text-white resize-y" placeholder="Describe brevemente lo que necesitas..."></textarea>
+                            
+                            <div class="space-y-4 mb-8 text-sm text-gray-300">
+                                <div class="flex justify-between font-bold"><span id="cot-res-tipo">Web Informativa</span><span id="cot-val-tipo">$250</span></div>
+                                <div class="flex justify-between font-bold text-gray-400"><span id="cot-res-diseno">+ Plantilla Base</span><span id="cot-val-diseno">$0</span></div>
+                                <div id="cot-res-extras-container" class="space-y-3 border-t border-gray-800 dark:border-[#262626] pt-4 hidden">
+                                    <!-- Aquí se inyectan los extras -->
+                                </div>
                             </div>
+                            
+                            <div class="border-t border-gray-800 dark:border-[#262626] pt-6 mb-8">
+                                <span class="block text-xs text-gray-400 uppercase tracking-widest font-bold mb-1">Inversión Aproximada</span>
+                                <div class="flex items-end gap-2">
+                                    <span class="text-4xl font-black text-white" id="cot-total">$250</span>
+                                    <span class="text-gray-400 font-bold mb-1" id="cot-currency-label">USD</span>
+                                </div>
+                                <div class="mt-5 bg-gray-900/60 dark:bg-black/50 border border-gray-800 dark:border-[#262626] p-3.5 rounded-xl flex gap-3 items-start">
+                                    <i data-lucide="info" class="w-5 h-5 text-blue-400 shrink-0 mt-0.5"></i>
+                                    <p class="text-[11px] text-gray-400 leading-relaxed">
+                                        Este valor es <strong>solo una aproximación</strong>. Para un precio exacto, necesita enviar la información correspondiente con los datos que requieran de su proyecto llenando el formulario del apartado de <strong class="text-white">Contacto</strong>.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <button onclick="solicitarCotizacion()" class="w-full py-4 bg-white text-black dark:bg-blue-600 dark:text-white rounded-xl font-bold hover:bg-gray-200 dark:hover:bg-blue-700 transition-all flex justify-center items-center gap-2 shadow-lg transform hover:-translate-y-1">
+                                Solicitar Cotización Formal <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </button>
                         </div>
-                        <button type="submit" id="submit-btn" class="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-xl shadow-md text-lg font-bold text-white bg-black dark:bg-blue-600 hover:bg-gray-900 dark:hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1">
-                            <i data-lucide="rocket" class="w-5 h-5"></i> Enviar Solicitud de Presupuesto
-                        </button>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
+        <!-- Beneficios -->
+        <section id="beneficios" class="py-20 bg-gray-50 dark:bg-[#000000] border-t border-gray-100 dark:border-[#262626] scroll-mt-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-black dark:bg-[#0a0a0a] dark:border dark:border-[#262626] rounded-[2.5rem] overflow-hidden shadow-2xl relative animate-fade-in-up">
+                    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gray-800 via-black to-black opacity-60"></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 relative z-10">
+                        <div class="p-10 sm:p-16 lg:p-20 flex flex-col justify-center">
+                            <span class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-4 block">Diferenciador</span>
+                            <h2 class="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight">¿Por qué trabajar conmigo?</h2>
+                            <p class="text-gray-400 mb-10 text-lg leading-relaxed">Mi enfoque va más allá de solo escribir código. Analizo tu modelo de negocio para crear soluciones tecnológicas hermosas, escalables y funcionales que realmente ayuden a automatizar tus procesos y aumentar tus ventas.</p>
+                            
+                            <div class="space-y-8">
+                                <div class="flex gap-5">
+                                    <div class="flex-shrink-0 w-14 h-14 bg-gray-800/80 backdrop-blur rounded-2xl flex items-center justify-center text-white border border-gray-700 shadow-inner">
+                                        <i data-lucide="timer" class="w-6 h-6 text-gray-300"></i>
+                                    </div>
+                                    <div><h4 class="text-white font-bold text-xl mb-1">Entregas Rápidas</h4><p class="text-gray-400 text-sm leading-relaxed">Uso metodologías ágiles y componentes reutilizables para que tengas tu proyecto a tiempo sin sacrificar la calidad.</p></div>
+                                </div>
+                                <div class="flex gap-5">
+                                    <div class="flex-shrink-0 w-14 h-14 bg-gray-800/80 backdrop-blur rounded-2xl flex items-center justify-center text-white border border-gray-700 shadow-inner">
+                                        <i data-lucide="smartphone" class="w-6 h-6 text-gray-300"></i>
+                                    </div>
+                                    <div><h4 class="text-white font-bold text-xl mb-1">100% Mobile-First</h4><p class="text-gray-400 text-sm leading-relaxed">Todos los diseños se adaptan perfectamente a cualquier pantalla, dando prioridad a la experiencia en teléfonos celulares.</p></div>
+                                </div>
+                                <div class="flex gap-5">
+                                    <div class="flex-shrink-0 w-14 h-14 bg-gray-800/80 backdrop-blur rounded-2xl flex items-center justify-center text-white border border-gray-700 shadow-inner">
+                                        <i data-lucide="shield-check" class="w-6 h-6 text-gray-300"></i>
+                                    </div>
+                                    <div><h4 class="text-white font-bold text-xl mb-1">Soporte y Garantía</h4><p class="text-gray-400 text-sm leading-relaxed">Te brindo acompañamiento continuo post-lanzamiento para asegurar que la plataforma funcione de maravilla en todo momento.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-900 p-10 flex items-center justify-center min-h-[400px] border-l border-gray-800">
+                             <div class="relative w-full max-w-md aspect-square bg-black rounded-full border-[10px] border-gray-800 flex items-center justify-center shadow-[inset_0_0_50px_rgba(0,0,0,0.8)] overflow-hidden">
+                                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNykiLz48L3N2Zz4=')] opacity-50"></div>
+                                <div class="text-center p-8 relative z-10">
+                                   <i data-lucide="terminal" class="w-24 h-24 text-gray-600 mx-auto mb-6 opacity-80"></i>
+                                   <p class="text-gray-400 font-medium text-lg italic tracking-wide">"Convirtiendo café en código y problemas en soluciones."</p>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section id="contacto" class="py-20 bg-gray-50 dark:bg-[#000000] scroll-mt-16">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white dark:bg-[#0a0a0a] border border-transparent dark:border-[#262626] rounded-[2rem] shadow-xl overflow-hidden animate-fade-in-up">
+                    <div class="p-8 sm:p-14">
+                        <div class="text-center mb-12">
+                            <span class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-2 block">Contacto</span>
+                            <h2 class="text-3xl font-black text-gray-900 dark:text-white sm:text-4xl">Cuéntame sobre tu proyecto</h2>
+                            <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Completa el formulario con los detalles y me pondré en contacto contigo lo antes posible para organizar una reunión gratuita.</p>
+                        </div>
+
+                        <div id="form-success-msg" class="hidden bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-900 dark:text-green-300 rounded-2xl p-8 text-center animate-fade-in-up">
+                            <div class="mx-auto w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mb-4 shadow-lg shadow-green-200 dark:shadow-none">
+                                <i data-lucide="check" class="w-8 h-8 text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-black mb-2">¡Mensaje Enviado con Éxito!</h3>
+                            <p class="font-medium">Gracias por contactarme. He recibido tu solicitud y te escribiré muy pronto al correo proporcionado.</p>
+                        </div>
+
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" for="nombre">Nombre o Empresa</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="user" class="h-5 w-5 text-gray-400"></i></div>
+                                        <input type="text" id="nombre" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] text-gray-900 dark:text-white" placeholder="Ej. Juan Pérez">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" for="email">Correo Electrónico</label>
+                                    <div class="relative">
+                                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="mail" class="h-5 w-5 text-gray-400"></i></div>
+                                        <input type="email" id="email" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] text-gray-900 dark:text-white" placeholder="tu@correo.com">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" for="servicio">¿Qué servicio te interesa?</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="layers" class="h-5 w-5 text-gray-400"></i></div>
+                                    <select id="servicio" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] appearance-none text-gray-700 dark:text-gray-300">
+                                        <option value="" disabled selected>Selecciona una opción...</option>
+                                        <option value="web">Página Web / Tienda Online</option>
+                                        <option value="software">Software Personalizado / Sistema / CRM</option>
+                                        <option value="invitacion">Invitación Digital Interactiva</option>
+                                        <option value="otro">Mantenimiento u Otro proyecto</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2" for="mensaje">Detalles del proyecto</label>
+                                <div class="relative">
+                                    <div class="absolute top-4 left-4 pointer-events-none"><i data-lucide="message-square" class="h-5 w-5 text-gray-400"></i></div>
+                                    <textarea id="mensaje" rows="5" required class="pl-12 block w-full rounded-xl shadow-sm focus:ring-black focus:border-black border p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] border-gray-300 dark:border-[#262626] text-gray-900 dark:text-white resize-y" placeholder="Describe brevemente lo que necesitas..."></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" id="submit-btn" class="w-full flex justify-center items-center gap-2 py-4 px-4 border border-transparent rounded-xl shadow-md text-lg font-bold text-white bg-black dark:bg-blue-600 hover:bg-gray-900 dark:hover:bg-blue-700 transition-all duration-300 transform hover:-translate-y-1">
+                                <i data-lucide="rocket" class="w-5 h-5"></i> Enviar Solicitud de Presupuesto
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Semántico -->
     <footer class="bg-black py-16 border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-8">
             <div class="flex items-center gap-2 text-white">
@@ -612,7 +826,7 @@
     <!-- AUTH Modal -->
     <div id="auth-modal-overlay" onclick="if(event.target === this) closeAuthModal()" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md animate-fade-in-up">
         <div class="bg-white dark:bg-[#0a0a0a] border dark:border-[#262626] w-full max-w-md rounded-3xl shadow-2xl relative">
-            <button onclick="closeAuthModal()" class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-[#171717] dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
+            <button onclick="closeAuthModal()" aria-label="Cerrar modal de autenticación" class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-[#171717] dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
             <div class="p-8 sm:p-10">
                 <div class="text-center mb-8">
                     <div class="mx-auto w-14 h-14 bg-black dark:bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg shadow-gray-400 dark:shadow-none mb-5"><i data-lucide="key" class="w-7 h-7 text-white"></i></div>
@@ -627,21 +841,21 @@
 
                 <form id="auth-form" class="space-y-5">
                     <div id="auth-name-field" class="hidden">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Nombre Completo</label>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" for="auth-name">Nombre Completo</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="user" class="w-5 h-5 text-gray-400"></i></div>
                             <input type="text" id="auth-name" class="pl-12 block w-full border border-gray-300 dark:border-[#262626] rounded-xl p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] focus:border-black dark:focus:border-blue-500 text-gray-900 dark:text-white transition-all" placeholder="Ej. Juan Pérez">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Correo Electrónico</label>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" for="auth-email">Correo Electrónico</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="mail" class="w-5 h-5 text-gray-400"></i></div>
                             <input type="email" id="auth-email" required class="pl-12 block w-full border border-gray-300 dark:border-[#262626] rounded-xl p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] focus:border-black dark:focus:border-blue-500 text-gray-900 dark:text-white transition-all" placeholder="tu@correo.com">
                         </div>
                     </div>
                     <div id="auth-password-container">
-                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1">Contraseña</label>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-1" for="auth-password">Contraseña</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="key" class="w-5 h-5 text-gray-400"></i></div>
                             <input type="password" id="auth-password" required minlength="6" class="pl-12 block w-full border border-gray-300 dark:border-[#262626] rounded-xl p-3.5 bg-gray-50 dark:bg-[#171717] focus:bg-white dark:focus:bg-[#000000] focus:border-black dark:focus:border-blue-500 text-gray-900 dark:text-white transition-all" placeholder="••••••••">
@@ -665,7 +879,7 @@
     <!-- PROMO Modal (Upselling) -->
     <div id="promo-modal-overlay" onclick="if(event.target === this) closePromoModal()" class="hidden fixed inset-0 z-[115] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-fade-in-up">
         <div class="bg-white dark:bg-[#0a0a0a] w-full max-w-md rounded-3xl shadow-2xl relative border border-transparent dark:border-[#262626] overflow-hidden">
-            <button onclick="closePromoModal()" class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-[#171717] dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
+            <button onclick="closePromoModal()" aria-label="Cerrar modal promocional" class="absolute top-4 right-4 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-[#171717] dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
             <div class="p-8 sm:p-10 text-center">
                 <div class="mx-auto w-16 h-16 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center rounded-full mb-6 shadow-inner">
                     <i data-lucide="rocket" class="w-8 h-8"></i>
@@ -694,7 +908,7 @@
     <!-- PERFIL Modal (Dashboard) -->
     <div id="profile-modal-overlay" onclick="if(event.target === this) closeProfileModal()" class="hidden fixed inset-0 z-[120] flex items-center justify-center bg-black/70 p-4 backdrop-blur-md animate-fade-in-up overflow-y-auto">
         <div class="bg-white dark:bg-[#0a0a0a] border border-transparent dark:border-[#262626] w-full max-w-lg rounded-[2rem] shadow-2xl relative my-auto overflow-hidden">
-            <button onclick="closeProfileModal()" class="absolute top-5 right-5 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-[#171717] dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
+            <button onclick="closeProfileModal()" aria-label="Cerrar modal de perfil" class="absolute top-5 right-5 z-20 bg-gray-100 hover:bg-gray-200 dark:bg-[#171717] dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-gray-700 dark:text-gray-300"></i></button>
             
             <!-- Cabecera del Perfil -->
             <div class="bg-gray-50 dark:bg-[#000000] p-6 sm:p-8 border-b border-gray-200 dark:border-[#262626] flex items-center gap-5">
@@ -716,6 +930,7 @@
                 <button onclick="switchProfileTab('billing')" id="tab-btn-billing" class="pb-3 border-b-2 border-transparent font-bold text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors flex gap-2 items-center"><i data-lucide="credit-card" class="w-4 h-4"></i> Pagos</button>
                 <button onclick="switchProfileTab('settings')" id="tab-btn-settings" class="pb-3 border-b-2 border-transparent font-bold text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors flex gap-2 items-center"><i data-lucide="settings" class="w-4 h-4"></i> Ajustes</button>
                 <button onclick="switchProfileTab('support')" id="tab-btn-support" class="pb-3 border-b-2 border-transparent font-bold text-sm text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors flex gap-2 items-center"><i data-lucide="help-circle" class="w-4 h-4"></i> Ayuda</button>
+                <button onclick="switchProfileTab('admin')" id="tab-btn-admin" class="pb-3 border-b-2 border-transparent font-bold text-sm text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 whitespace-nowrap transition-colors flex gap-2 items-center"><i data-lucide="shield-alert" class="w-4 h-4"></i> Admin</button>
             </div>
             
             <!-- Contenedor de Contenido -->
@@ -725,14 +940,14 @@
                 <form id="profile-form" class="space-y-5 animate-fade-in-up">
                     <div class="grid grid-cols-1 gap-5">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1">Correo Electrónico <span class="font-normal ml-1 lowercase">(Bloqueado)</span></label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1" for="profile-email">Correo Electrónico <span class="font-normal ml-1 lowercase">(Bloqueado)</span></label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="mail" class="h-4 w-4 text-gray-400"></i></div>
                                 <input type="email" id="profile-email" disabled class="pl-11 block w-full border border-transparent rounded-xl p-3 bg-gray-100 dark:bg-[#171717] text-gray-500 font-medium cursor-not-allowed" value="...">
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1">Nombre Completo</label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1" for="profile-name">Nombre Completo</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="user" class="h-4 w-4 text-gray-400"></i></div>
                                 <input type="text" id="profile-name" disabled class="profile-input pl-11 block w-full border border-transparent rounded-xl p-3 bg-gray-50 dark:bg-[#000000] text-gray-900 dark:text-white font-medium focus:ring-black focus:border-black transition-all" placeholder="Ej. Juan Pérez">
@@ -740,14 +955,14 @@
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1">Teléfono</label>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1" for="profile-phone">Teléfono</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="phone" class="h-4 w-4 text-gray-400"></i></div>
                                     <input type="tel" id="profile-phone" disabled class="profile-input pl-11 block w-full border border-transparent rounded-xl p-3 bg-gray-50 dark:bg-[#000000] text-gray-900 dark:text-white font-medium focus:ring-black focus:border-black transition-all" placeholder="000-000-0000">
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1">Empresa</label>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-400 uppercase tracking-wide mb-1" for="profile-company">Empresa</label>
                                 <div class="relative">
                                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><i data-lucide="building" class="h-4 w-4 text-gray-400"></i></div>
                                     <input type="text" id="profile-company" disabled class="profile-input pl-11 block w-full border border-transparent rounded-xl p-3 bg-gray-50 dark:bg-[#000000] text-gray-900 dark:text-white font-medium focus:ring-black focus:border-black transition-all" placeholder="Opcional">
@@ -837,7 +1052,7 @@
                             <i data-lucide="info" class="w-6 h-6 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-1"></i>
                             <div>
                                 <h4 class="text-sm font-bold text-blue-900 dark:text-blue-300 mb-1">¿Necesitas ayuda urgente?</h4>
-                                <p class="text-xs text-blue-700 dark:text-blue-400/80 leading-relaxed">Si tu sistema presenta un error crítico, utiliza el canal de WhatsApp para soporte prioritario (solo Profesional/Enterprise).</p>
+                                <p class="text-xs text-blue-700 dark:text-blue-200 leading-relaxed">Si tu sistema presenta un error crítico, utiliza el canal de WhatsApp para soporte prioritario (solo Profesional/Enterprise).</p>
                             </div>
                         </div>
                     </div>
@@ -861,79 +1076,51 @@
                     </div>
                 </div>
 
+                <!-- PESTAÑA 5: Admin (Tabla de Usuarios) -->
+                <div id="tab-admin" class="hidden space-y-4 animate-fade-in-up">
+                    <div class="flex justify-between items-center mb-2">
+                        <div>
+                            <h4 class="text-sm font-black text-gray-900 dark:text-white uppercase tracking-widest">Panel de Control</h4>
+                            <p class="text-xs text-gray-500">Usuarios registrados en la base de datos.</p>
+                        </div>
+                        <button onclick="loadAdminUsers()" class="flex items-center gap-1 bg-black dark:bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-gray-800 dark:hover:bg-blue-700 transition-colors shadow-sm">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Actualizar
+                        </button>
+                    </div>
+                    
+                    <div class="border border-gray-200 dark:border-[#262626] rounded-xl overflow-hidden bg-gray-50 dark:bg-[#171717]">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-gray-100 dark:bg-[#262626] text-gray-600 dark:text-gray-300 text-xs uppercase font-black">
+                                    <tr>
+                                        <th class="px-4 py-3 border-b border-gray-200 dark:border-[#333]">Usuario</th>
+                                        <th class="px-4 py-3 border-b border-gray-200 dark:border-[#333]">Contacto / Región</th>
+                                        <th class="px-4 py-3 border-b border-gray-200 dark:border-[#333]">Plan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-users-tbody" class="divide-y divide-gray-200 dark:divide-[#262626] bg-white dark:bg-[#0a0a0a]">
+                                    <!-- Los usuarios se cargarán aquí por JS -->
+                                    <tr>
+                                        <td colspan="3" class="px-4 py-6 text-center text-gray-500 text-xs">Cargando base de datos...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 
-    <!-- DEMOS Modals -->
-    <div id="modal-overlay" onclick="if(event.target === this) closeModal()" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md">
-        <div class="bg-white dark:bg-[#0a0a0a] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden relative border border-transparent dark:border-[#262626] animate-fade-in-up">
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-20 bg-white/80 dark:bg-[#171717]/80 hover:bg-white dark:hover:bg-[#262626] rounded-full p-2 transition-colors"><i data-lucide="x" class="w-5 h-5 text-black dark:text-white"></i></button>
-            
-            <!-- DEMO: INVITACIÓN -->
-            <div id="demo-invitation" class="hidden">
-                <div class="h-48 bg-gray-100 dark:bg-[#171717] relative overflow-hidden flex items-center justify-center">
-                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gray-200 dark:from-[#262626] via-transparent to-transparent"></div>
-                    <i data-lucide="heart" class="w-16 h-16 text-black dark:text-blue-500 animate-pulse shadow-2xl rounded-full relative z-10"></i>
-                </div>
-                <div class="p-8 text-center bg-white dark:bg-[#0a0a0a] relative">
-                    <div class="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-black dark:bg-blue-600 text-white rounded-full flex items-center justify-center border-[6px] border-white dark:border-[#0a0a0a] shadow-lg"><i data-lucide="party-popper" class="w-8 h-8"></i></div>
-                    <h3 class="text-3xl font-bold mt-6 mb-2 font-serif italic text-gray-900 dark:text-white">Carlos & Ana</h3>
-                    <p class="text-gray-500 text-sm mb-6 uppercase tracking-widest font-bold">¡Nos Casamos!</p>
-                    
-                    <div class="grid grid-cols-3 gap-3 mb-8">
-                        <div class="bg-gray-50 dark:bg-[#171717] border border-gray-100 dark:border-[#262626] py-3 rounded-xl"><span class="block text-2xl font-black text-black dark:text-white">15</span><span class="text-[10px] text-gray-500 uppercase font-bold">Días</span></div>
-                        <div class="bg-gray-50 dark:bg-[#171717] border border-gray-100 dark:border-[#262626] py-3 rounded-xl"><span class="block text-2xl font-black text-black dark:text-white">08</span><span class="text-[10px] text-gray-500 uppercase font-bold">Hrs</span></div>
-                        <div class="bg-gray-50 dark:bg-[#171717] border border-gray-100 dark:border-[#262626] py-3 rounded-xl"><span class="block text-2xl font-black text-black dark:text-white">45</span><span class="text-[10px] text-gray-500 uppercase font-bold">Min</span></div>
-                    </div>
-                    <button id="btn-rsvp" class="w-full py-4 rounded-xl font-bold text-lg shadow-lg flex justify-center items-center gap-2 bg-black dark:bg-blue-600 text-white hover:bg-gray-800 dark:hover:bg-blue-700 transition-all duration-300">
-                        <i data-lucide="check" class="w-5 h-5 hidden" id="rsvp-icon"></i> <span id="rsvp-text">Confirmar Asistencia</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- DEMO: WEB -->
-            <div id="demo-web" class="hidden p-6 bg-white dark:bg-[#0a0a0a] min-h-[400px] flex flex-col">
-                <div class="flex justify-between items-center mb-6 pt-2 border-b border-gray-100 dark:border-[#262626] pb-4">
-                    <h3 class="font-black text-2xl text-gray-900 dark:text-white tracking-tight">StyleStore<span class="text-blue-500">.</span></h3>
-                    <div class="relative">
-                        <i data-lucide="shopping-bag" class="w-7 h-7 text-gray-800 dark:text-gray-300"></i>
-                        <span id="cart-badge" class="hidden absolute -top-2 -right-2 bg-blue-500 text-white text-[11px] font-black rounded-full w-5 h-5 flex items-center justify-center">0</span>
-                    </div>
-                </div>
-                <div class="bg-gray-100 dark:bg-[#171717] h-56 rounded-2xl mb-6 flex flex-col items-center justify-center text-gray-400 border border-gray-200 dark:border-[#262626]">
-                    <i data-lucide="image" class="w-12 h-12 mb-2 text-gray-300 dark:text-gray-600"></i>
-                    <span class="font-bold text-sm tracking-widest uppercase">Fotografía Producto</span>
-                </div>
-                <div class="flex-1">
-                    <div class="flex justify-between items-start mb-2">
-                        <h4 class="font-bold text-xl text-gray-900 dark:text-white">Zapatillas UrbanX</h4>
-                        <span class="font-black text-xl text-black dark:text-blue-400">$129.99</span>
-                    </div>
-                    <p class="text-gray-500 text-sm mb-6 leading-relaxed">Diseño minimalista y ergonómico para la ciudad.</p>
-                </div>
-                <button id="btn-add-cart" class="w-full bg-black dark:bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-blue-700 mt-auto shadow-lg flex items-center justify-center gap-2 transition-all"><i data-lucide="shopping-cart" class="w-5 h-5"></i> Agregar al carrito</button>
-            </div>
-
-            <!-- DEMO: SISTEMA -->
-            <div id="demo-system" class="hidden p-6 bg-gray-50 dark:bg-[#000000] min-h-[400px] rounded-3xl flex flex-col">
-                <h3 class="font-black text-xl text-gray-900 dark:text-white mb-6 flex items-center gap-2 pt-2 border-b border-gray-200 dark:border-[#262626] pb-4"><i data-lucide="bar-chart-3" class="w-6 h-6 text-black dark:text-blue-500"></i> Resumen Ejecutivo</h3>
-                <div class="grid grid-cols-2 gap-3 mb-6">
-                    <div class="bg-white dark:bg-[#0a0a0a] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-[#262626]"><span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Ingresos Hoy</span><strong class="text-3xl font-black text-green-600 dark:text-green-400">$3,450</strong></div>
-                    <div class="bg-white dark:bg-[#0a0a0a] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-[#262626]"><span class="text-xs text-gray-500 font-bold uppercase tracking-wider block mb-1">Nuevos Clientes</span><strong class="text-3xl font-black text-black dark:text-white">+124</strong></div>
-                </div>
-                <div class="bg-white dark:bg-[#0a0a0a] p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-[#262626] mb-6">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-sm font-bold text-gray-700 dark:text-gray-300">Meta Mensual</span>
-                        <span class="text-sm font-black text-black dark:text-blue-500">75%</span>
-                    </div>
-                    <div class="w-full bg-gray-100 dark:bg-[#171717] rounded-full h-3 overflow-hidden">
-                        <div class="bg-black dark:bg-blue-600 h-3 rounded-full w-[75%] relative"><div class="absolute inset-0 bg-white/20 animate-pulse"></div></div>
-                    </div>
-                </div>
-                <button id="btn-report" class="w-full bg-black dark:bg-blue-600 text-white py-4 px-4 text-base font-bold hover:bg-gray-800 dark:hover:bg-blue-700 mt-auto rounded-xl shadow-lg flex justify-center items-center gap-2 transition-all">
-                    <span id="report-text" class="flex items-center gap-2"><i data-lucide="refresh-cw" class="w-5 h-5"></i> Descargar Reporte</span>
-                </button>
+    <!-- EL CARTEL DE COOKIES -->
+    <div id="cookie-consent-banner" class="hidden fixed bottom-4 right-4 z-[9999] animate-fade-in-up">
+        <div class="cookie-card">
+            <span class="cookieHeading">Uso de Cookies</span>
+            <p class="cookieDescription">Utilizamos cookies para mejorar tu experiencia en nuestra plataforma digital.</p>
+            <div class="buttonContainer">
+                <button id="accept-cookies" class="acceptButton">Aceptar</button>
+                <button id="decline-cookies" class="declineButton">Rechazar</button>
             </div>
         </div>
     </div>
@@ -960,6 +1147,9 @@
             if(linkProf) linkProf.href = PAYMENT_LINKS.profesional;
             if(linkEnt) linkEnt.href = PAYMENT_LINKS.enterprise;
             if(linkPromo) linkPromo.href = PAYMENT_LINKS.profesional;
+            
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) yearSpan.textContent = new Date().getFullYear();
         });
 
         // ==========================================
@@ -1023,7 +1213,6 @@
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('section');
 
-            // Scroll suave al hacer click
             document.querySelectorAll('.nav-scroll-link').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -1131,16 +1320,16 @@
                     <h4 class="text-xs font-black text-gray-500 uppercase tracking-widest mb-3">Agregar Nueva Tarjeta</h4>
                     <form id="add-card-form" class="space-y-4 border border-gray-200 dark:border-[#262626] p-5 rounded-xl bg-gray-50 dark:bg-[#171717] animate-fade-in-up">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Número de Tarjeta</label>
+                            <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1" for="new-cc-num">Número de Tarjeta</label>
                             <input type="text" id="new-cc-num" placeholder="0000 0000 0000 0000" required class="w-full border border-gray-300 dark:border-[#262626] rounded-lg p-3 text-sm font-mono bg-white dark:bg-black text-gray-900 dark:text-white" maxlength="19">
                         </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">Expiración</label>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1" for="new-cc-exp">Expiración</label>
                                 <input type="text" id="new-cc-exp" placeholder="MM/AA" required class="w-full border border-gray-300 dark:border-[#262626] rounded-lg p-3 text-sm font-mono text-center bg-white dark:bg-black text-gray-900 dark:text-white" maxlength="5">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1">CVC</label>
+                                <label class="block text-xs font-bold text-gray-700 dark:text-gray-300 mb-1" for="new-cc-cvc">CVC</label>
                                 <input type="password" id="new-cc-cvc" placeholder="•••" required class="w-full border border-gray-300 dark:border-[#262626] rounded-lg p-3 text-sm font-mono bg-white dark:bg-black text-gray-900 dark:text-white" maxlength="4">
                             </div>
                         </div>
@@ -1180,15 +1369,53 @@
         }
 
         // ==========================================
-        // ENLACES DE PAGO Y ALGORITMO PROMOCIONAL
+        // ENLACES DE PAGO E INTEGRACIÓN CON SUPABASE
         // ==========================================
-        function registrarIntentoCompra(plan) {
-            localStorage.setItem('userPurchasedPlan', plan);
-            const promoOverlay = document.getElementById('promo-modal-overlay');
-            if(promoOverlay) promoOverlay.classList.add('hidden');
-            loadUserProfile();
-            showLoader();
-            setTimeout(hideLoader, 2000);
+        async function registrarIntentoCompra(plan) {
+            try {
+                showLoader();
+                
+                // Fallback de seguridad local (navegador)
+                localStorage.setItem('userPurchasedPlan', plan);
+                
+                const promoOverlay = document.getElementById('promo-modal-overlay');
+                if(promoOverlay) promoOverlay.classList.add('hidden');
+
+                // 1. Sincronizar plan en la NUBE (Tabla 'perfiles' de Supabase)
+                if (supabaseClient) {
+                    const { data: { session } } = await supabaseClient.auth.getSession();
+                    if (session) {
+                        // Guardar en la tabla pública 'perfiles'
+                        const { error: dbError } = await supabaseClient.from('perfiles')
+                            .update({ plan_actual: plan })
+                            .eq('id', session.user.id);
+                            
+                        // Respaldar también en metadatos para UI ultra-rápida
+                        const { error } = await supabaseClient.auth.updateUser({ 
+                            data: { plan_actual: plan } 
+                        });
+                        
+                        if (dbError && !String(dbError.message).includes('Fetch')) {
+                            console.error("Error actualizando tabla perfiles:", dbError);
+                        }
+                    }
+                }
+
+                // 2. Sincronizar en la sesión de demostración (si aplica)
+                let demoSession = localStorage.getItem('demo_session');
+                if (demoSession) {
+                    let parsed = JSON.parse(demoSession);
+                    if(!parsed.user.user_metadata) parsed.user.user_metadata = {};
+                    parsed.user.user_metadata.plan_actual = plan;
+                    localStorage.setItem('demo_session', JSON.stringify(parsed));
+                }
+
+                await loadUserProfile();
+                setTimeout(hideLoader, 1000);
+            } catch (e) {
+                console.error("Error guardando el plan del usuario:", e);
+                setTimeout(hideLoader, 1000);
+            }
         }
 
         function showPromoModal() {
@@ -1311,7 +1538,7 @@
         } catch(e) {}
 
         // ==========================================
-        // GESTIÓN DE PERFIL DEL USUARIO (DASHBOARD)
+        // GESTIÓN DE PERFIL DEL USUARIO CON SUPABASE
         // ==========================================
         async function openProfileModal() {
             try {
@@ -1336,13 +1563,15 @@
                 const tBil = document.getElementById('tab-billing');
                 const tSet = document.getElementById('tab-settings');
                 const tSup = document.getElementById('tab-support');
+                const tAdmin = document.getElementById('tab-admin');
                 
                 if(form) form.classList.add('hidden');
                 if(tBil) tBil.classList.add('hidden');
                 if(tSet) tSet.classList.add('hidden');
                 if(tSup) tSup.classList.add('hidden');
+                if(tAdmin) tAdmin.classList.add('hidden');
                 
-                ['info', 'billing', 'settings', 'support'].forEach(t => {
+                ['info', 'billing', 'settings', 'support', 'admin'].forEach(t => {
                     const btn = document.getElementById('tab-btn-' + t);
                     if(btn) {
                         btn.classList.remove('border-black', 'dark:border-blue-500', 'text-black', 'dark:text-blue-500');
@@ -1360,9 +1589,13 @@
                 if (tabId === 'billing' && tBil) tBil.classList.remove('hidden');
                 if (tabId === 'settings' && tSet) tSet.classList.remove('hidden');
                 if (tabId === 'support' && tSup) tSup.classList.remove('hidden');
+                if (tabId === 'admin' && tAdmin) {
+                    tAdmin.classList.remove('hidden');
+                    loadAdminUsers(); // Cargamos la tabla visual desde Supabase
+                }
             } catch(e) {}
         }
-
+        
         function setProfileEditMode(isEditing) {
             try {
                 const inputs = document.querySelectorAll('.profile-input');
@@ -1384,6 +1617,54 @@
             } catch(e) {}
         }
 
+        async function loadAdminUsers() {
+            const tbody = document.getElementById('admin-users-tbody');
+            if(!tbody) return;
+            
+            tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center"><i data-lucide="loader-2" class="w-6 h-6 animate-spin mx-auto text-gray-400"></i></td></tr>';
+            updateIcons();
+            
+            try {
+                if (supabaseClient) {
+                    // Extraer a todos los usuarios de la tabla perfiles, ordenados por los más recientes
+                    const { data, error } = await supabaseClient.from('perfiles').select('*').order('created_at', { ascending: false });
+                    if (error) throw error;
+                    
+                    if (data && data.length > 0) {
+                        tbody.innerHTML = '';
+                        data.forEach(user => {
+                            const date = new Date(user.created_at).toLocaleDateString('es-MX', {day: '2-digit', month: 'short', year: 'numeric'});
+                            const planColor = user.plan_actual === 'Gratuito' ? 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border border-gray-200 dark:border-gray-700' : 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50';
+                            
+                            tbody.innerHTML += `
+                                <tr class="hover:bg-gray-50 dark:hover:bg-[#171717] transition-colors group">
+                                    <td class="px-4 py-3">
+                                        <p class="font-bold text-gray-900 dark:text-white truncate max-w-[120px] sm:max-w-xs">${user.nombre || 'Sin Nombre'}</p>
+                                        <p class="text-[10px] text-gray-400 uppercase tracking-wider">${date}</p>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <p class="text-xs text-gray-600 dark:text-gray-300 truncate max-w-[120px] sm:max-w-xs">${user.email}</p>
+                                        <p class="text-[10px] text-gray-400 truncate max-w-[120px] sm:max-w-xs">Región: ${user.region || 'No especificada'}</p>
+                                    </td>
+                                    <td class="px-4 py-3 text-right sm:text-left">
+                                        <span class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${planColor}">${user.plan_actual}</span>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500 text-xs font-bold">No hay usuarios registrados en Supabase.</td></tr>';
+                    }
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500 text-xs font-bold">Conexión a Supabase inactiva.</td></tr>';
+                }
+            } catch(e) {
+                console.error("Error Admin:", e);
+                tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-red-500 text-xs font-bold">Error al leer la tabla. Intenta recargar la página.</td></tr>';
+            }
+            updateIcons();
+        }
+
         async function loadUserProfile() {
             try {
                 let sessionData = null;
@@ -1400,32 +1681,47 @@
                 
                 if (sessionData) {
                     const user = sessionData.user;
+                    let dbProfile = {};
+                    
+                    // LECTURA DESDE LA TABLA 'PERFILES'
+                    if (supabaseClient) {
+                        const { data } = await supabaseClient.from('perfiles')
+                            .select('*')
+                            .eq('id', user.id)
+                            .single();
+                        if (data) dbProfile = data;
+                    }
+
                     const metadata = user.user_metadata || {};
+                    
+                    const currentName = dbProfile.nombre || metadata.full_name || '';
+                    const currentPhone = dbProfile.telefono || metadata.phone || '';
+                    const currentCompany = dbProfile.empresa || metadata.company || '';
+                    const currentPlan = dbProfile.plan_actual || metadata.plan_actual || localStorage.getItem('userPurchasedPlan') || 'Gratuito';
                     
                     const mailEl = document.getElementById('profile-email');
                     const nameEl = document.getElementById('profile-name');
                     const phoneEl = document.getElementById('profile-phone');
                     const compEl = document.getElementById('profile-company');
                     
-                    if(mailEl) mailEl.value = user.email;
-                    if(nameEl) nameEl.value = metadata.full_name || '';
-                    if(phoneEl) phoneEl.value = metadata.phone || '';
-                    if(compEl) compEl.value = metadata.company || '';
+                    if(mailEl) mailEl.value = dbProfile.email || user.email;
+                    if(nameEl) nameEl.value = currentName;
+                    if(phoneEl) phoneEl.value = currentPhone;
+                    if(compEl) compEl.value = currentCompany;
                     
-                    const displayName = metadata.full_name || user.email;
+                    const displayName = currentName || user.email;
                     const headerName = document.getElementById('profile-header-name');
                     const headerEmail = document.getElementById('profile-header-email');
                     const avatar = document.getElementById('profile-avatar-initial');
                     
                     if(headerName) headerName.textContent = displayName;
-                    if(headerEmail) headerEmail.textContent = user.email;
+                    if(headerEmail) headerEmail.textContent = dbProfile.email || user.email;
                     if(avatar) avatar.textContent = displayName.charAt(0).toUpperCase();
                     
-                    const savedPlan = localStorage.getItem('userPurchasedPlan') || 'Gratuito';
                     const badgePlan = document.getElementById('profile-plan-badge');
                     const billingPlan = document.getElementById('billing-plan-name');
-                    if(badgePlan) badgePlan.textContent = savedPlan;
-                    if(billingPlan) billingPlan.textContent = savedPlan;
+                    if(badgePlan) badgePlan.textContent = currentPlan;
+                    if(billingPlan) billingPlan.textContent = currentPlan;
                 }
             } catch(e) {}
         }
@@ -1450,8 +1746,22 @@
 
                 try {
                     if (supabaseClient) {
-                        const { error } = await supabaseClient.auth.updateUser({ data: updates });
-                        if (error && !String(error.message).includes('API key') && !String(error.message).includes('Fetch')) throw error;
+                        const { data: { session } } = await supabaseClient.auth.getSession();
+                        if (session) {
+                            // ESCRITURA DIRECTA EN LA TABLA 'PERFILES'
+                            const { error: dbError } = await supabaseClient.from('perfiles')
+                                .update({
+                                    nombre: updates.full_name,
+                                    telefono: updates.phone,
+                                    empresa: updates.company
+                                })
+                                .eq('id', session.user.id);
+                            
+                            if (dbError && !String(dbError.message).includes('Fetch')) throw dbError;
+                            
+                            // Respaldar en metadata
+                            await supabaseClient.auth.updateUser({ data: updates });
+                        }
                     }
 
                     let demoSession = localStorage.getItem('demo_session');
@@ -1500,7 +1810,7 @@
         }
 
         // ==========================================
-        // FORMULARIO DE CONTACTO
+        // FORMULARIO DE CONTACTO (TABLA 'CONTACTOS')
         // ==========================================
         const contactFormEl = document.getElementById('contact-form');
         if (contactFormEl) {
@@ -1517,13 +1827,20 @@
                 
                 try {
                     if(supabaseClient) {
+                        // GUARDAR MENSAJE EN TABLA 'CONTACTOS'
                         const { error } = await supabaseClient.from('contactos').insert([{
                             nombre: document.getElementById('nombre').value,
                             email: document.getElementById('email').value,
                             servicio: document.getElementById('servicio').value,
                             mensaje: document.getElementById('mensaje').value
                         }]);
-                        if (error && !String(error.message).includes('API key') && !String(error.message).includes('Fetch')) throw error;
+                        
+                        if (error) {
+                            console.error("Error detallado de Supabase al enviar contacto:", error);
+                            if (!String(error.message).includes('API key') && !String(error.message).includes('Fetch')) {
+                                throw error;
+                            }
+                        }
                     }
                     
                     hideLoader();
@@ -1541,7 +1858,22 @@
                     }, 5000);
                 } catch(error) {
                     hideLoader();
-                    alert("Hubo un problema de conexión con el servidor. Inténtalo de nuevo.");
+                    console.error("Catch Error en Contacto:", error);
+                    
+                    let msgError = "Hubo un problema de conexión con el servidor.";
+                    
+                    if (error && error.message) {
+                        if (error.message.includes('relation "contactos" does not exist')) {
+                            msgError = "Falta crear la tabla: La tabla 'contactos' no existe en tu Supabase.";
+                        } else if (error.message.includes('row-level security policy')) {
+                            msgError = "Faltan Permisos: Debes ejecutar la política (Policy) de RLS en Supabase para permitir envíos.";
+                        } else {
+                            msgError = "Error detallado: " + error.message;
+                        }
+                    }
+                    
+                    alert(msgError);
+                    
                     btn.innerHTML = originalHTML;
                     btn.disabled = false;
                     btn.classList.remove('opacity-75', 'cursor-not-allowed');
@@ -1551,7 +1883,7 @@
         }
 
         // ==========================================
-        // AUTENTICACIÓN (100% BLINDADA)
+        // AUTENTICACIÓN (LOGIN/REGISTRO)
         // ==========================================
         let authMode = 'login'; 
 
@@ -1671,10 +2003,30 @@
                             const { error } = await supabaseClient.auth.signInWithPassword({email, password: pass});
                             resError = error;
                         } else if (authMode === 'register') {
-                            const { error } = await supabaseClient.auth.signUp({
+                            // Crear Usuario en Auth de Supabase
+                            const { data, error } = await supabaseClient.auth.signUp({
                                 email, password: pass, options: { data: { full_name: name } }
                             });
                             resError = error;
+                            
+                            // MÉTODO A PRUEBA DE FALLOS: Inserción directa desde el código
+                            // Garantiza que el perfil se cree en la tabla 'perfiles' al instante
+                            if (!error && data?.user) {
+                                // Detectar la región automáticamente
+                                const userRegion = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Desconocida';
+                                
+                                const { error: profileError } = await supabaseClient.from('perfiles').insert([{
+                                    id: data.user.id,
+                                    nombre: name,
+                                    email: email,
+                                    plan_actual: 'Gratuito',
+                                    region: userRegion
+                                }]);
+                                
+                                if(profileError) {
+                                    console.error("Error forzando la creación del perfil:", profileError);
+                                }
+                            }
                         } else if (authMode === 'recover') {
                             const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
                                 redirectTo: window.location.origin + window.location.pathname,
@@ -1682,8 +2034,9 @@
                             resError = error;
                         }
                         
+                        // Fallback en caso de que la configuración de Supabase esté en pausa
                         if (resError && (String(resError).includes('API key') || String(resError.message).includes('API key') || String(resError.message).includes('JWT') || String(resError.message).includes('Fetch'))) {
-                            console.warn("Simulando inicio de sesión...");
+                            console.warn("Simulando inicio de sesión local...");
                             resError = null;
                             if (authMode !== 'recover') {
                                 const simSession = { user: { email: email, user_metadata: { full_name: name || email } } };
@@ -1694,6 +2047,7 @@
                             throw resError;
                         }
                     } else {
+                        // Demo mode fallback puro
                         if (authMode !== 'recover') {
                             const simSession = { user: { email: email, user_metadata: { full_name: name || email } } };
                             localStorage.setItem('demo_session', JSON.stringify(simSession));
@@ -1770,13 +2124,28 @@
                     if(mus) mus.classList.remove('hidden');
                     if(mue) mue.textContent = displayName;
                     
-                    // --- ALGORITMO PROMOCIONAL (UPSELLING) ---
-                    const currentPlan = localStorage.getItem('userPurchasedPlan') || 'Gratuito';
-                    if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
-                        setTimeout(() => {
-                            showPromoModal();
-                            sessionStorage.setItem('promoShown', 'true');
-                        }, 1500);
+                    // --- ALGORITMO PROMOCIONAL (UPSELLING) BLINDADO CON LA TABLA EXTERNA ---
+                    let currentPlan = session.user.user_metadata?.plan_actual || localStorage.getItem('userPurchasedPlan') || 'Gratuito';
+                    
+                    if (supabaseClient) {
+                        supabaseClient.from('perfiles').select('plan_actual').eq('id', session.user.id).single()
+                        .then(({data}) => {
+                            if (data && data.plan_actual) currentPlan = data.plan_actual;
+                            
+                            if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
+                                setTimeout(() => {
+                                    showPromoModal();
+                                    sessionStorage.setItem('promoShown', 'true');
+                                }, 1500);
+                            }
+                        }).catch(e => console.log("Validación promo local."));
+                    } else {
+                        if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
+                            setTimeout(() => {
+                                showPromoModal();
+                                sessionStorage.setItem('promoShown', 'true');
+                            }, 1500);
+                        }
                     }
                     
                 } else {
@@ -1826,6 +2195,186 @@
                 if(mobileMenu) mobileMenu.classList.add('hidden');
             } catch(e) {}
         }
+
+        // ==========================================
+        // COTIZADOR INTERACTIVO & MONEDA
+        // ==========================================
+        const CURRENCY_RATES = {
+            USD: { rate: 1, locale: 'en-US', symbol: 'USD' },
+            MXN: { rate: 20, locale: 'es-MX', symbol: 'MXN' },
+            EUR: { rate: 0.92, locale: 'es-ES', symbol: 'EUR' },
+            COP: { rate: 3900, locale: 'es-CO', symbol: 'COP' },
+            ARS: { rate: 1000, locale: 'es-AR', symbol: 'ARS' },
+            CLP: { rate: 950, locale: 'es-CL', symbol: 'CLP' },
+            PEN: { rate: 3.75, locale: 'es-PE', symbol: 'PEN' }
+        };
+        let currentCurrency = 'USD';
+
+        const PLAN_PRICES_USD = {
+            basico: 65,
+            profesional: 175,
+            enterprise: 500
+        };
+
+        function detectCurrency() {
+            try {
+                const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+                
+                if (tz.includes('Mexico')) currentCurrency = 'MXN';
+                else if (tz.includes('Europe') || tz.includes('Madrid')) currentCurrency = 'EUR';
+                else if (tz.includes('Bogota')) currentCurrency = 'COP';
+                else if (tz.includes('Buenos_Aires')) currentCurrency = 'ARS';
+                else if (tz.includes('Santiago')) currentCurrency = 'CLP';
+                else if (tz.includes('Lima')) currentCurrency = 'PEN';
+                else currentCurrency = 'USD';
+                
+                const selector = document.getElementById('currency-selector');
+                if(selector) selector.value = currentCurrency;
+            } catch(e) {
+                currentCurrency = 'USD';
+            }
+        }
+
+        function changeCurrency() {
+            const selector = document.getElementById('currency-selector');
+            if(selector) {
+                currentCurrency = selector.value;
+                updateQuote();
+                updatePlansPrices();
+            }
+        }
+
+        function updatePlansPrices() {
+            try {
+                const currencyData = CURRENCY_RATES[currentCurrency] || CURRENCY_RATES['USD'];
+                const formatter = new Intl.NumberFormat(currencyData.locale, { 
+                    style: 'currency', 
+                    currency: currencyData.symbol, 
+                    maximumFractionDigits: 0 
+                });
+
+                document.getElementById('plan-basico-price').textContent = formatter.format(PLAN_PRICES_USD.basico * currencyData.rate);
+                document.getElementById('plan-basico-currency').textContent = ` ${currencyData.symbol}/mes`;
+
+                document.getElementById('plan-profesional-price').textContent = formatter.format(PLAN_PRICES_USD.profesional * currencyData.rate);
+                document.getElementById('plan-profesional-currency').textContent = ` ${currencyData.symbol}/mes`;
+
+                document.getElementById('plan-enterprise-price').textContent = formatter.format(PLAN_PRICES_USD.enterprise * currencyData.rate);
+                document.getElementById('plan-enterprise-currency').textContent = ` ${currencyData.symbol}/mes`;
+            } catch(e) {}
+        }
+
+        function updateQuote() {
+            try {
+                const currencyData = CURRENCY_RATES[currentCurrency] || CURRENCY_RATES['USD'];
+                const formatter = new Intl.NumberFormat(currencyData.locale, { 
+                    style: 'currency', 
+                    currency: currencyData.symbol, 
+                    maximumFractionDigits: 0 
+                });
+                
+                let totalUsd = 0;
+                
+                const typeInput = document.querySelector('input[name="cot_tipo"]:checked');
+                if(!typeInput) return;
+                
+                const typeValUsd = parseInt(typeInput.value);
+                const typeValLocal = typeValUsd * currencyData.rate;
+                const typeName = typeInput.getAttribute('data-name');
+                totalUsd += typeValUsd;
+                
+                document.getElementById('cot-res-tipo').textContent = typeName;
+                document.getElementById('cot-val-tipo').textContent = formatter.format(typeValLocal);
+
+                const disenoInput = document.querySelector('input[name="cot_diseno"]:checked');
+                if(disenoInput) {
+                    const disenoValUsd = parseInt(disenoInput.value);
+                    const disenoValLocal = disenoValUsd * currencyData.rate;
+                    const disenoName = disenoInput.getAttribute('data-name');
+                    totalUsd += disenoValUsd;
+                    document.getElementById('cot-res-diseno').textContent = "+ " + disenoName;
+                    document.getElementById('cot-val-diseno').textContent = formatter.format(disenoValLocal);
+                }
+
+                const extras = document.querySelectorAll('.cot-extra:checked');
+                const extrasContainer = document.getElementById('cot-res-extras-container');
+                
+                if(extras.length > 0) {
+                    extrasContainer.classList.remove('hidden');
+                    extrasContainer.innerHTML = '';
+                    extras.forEach(extra => {
+                        const valUsd = parseInt(extra.value);
+                        const valLocal = valUsd * currencyData.rate;
+                        const name = extra.getAttribute('data-name');
+                        totalUsd += valUsd;
+                        extrasContainer.innerHTML += `<div class="flex justify-between text-xs text-gray-400"><span>+ ${name}</span><span class="font-medium text-gray-300">${formatter.format(valLocal)}</span></div>`;
+                    });
+                } else {
+                    extrasContainer.classList.add('hidden');
+                    extrasContainer.innerHTML = '';
+                }
+                
+                const totalLocal = totalUsd * currencyData.rate;
+                document.getElementById('cot-total').textContent = formatter.format(totalLocal);
+                document.getElementById('cot-currency-label').textContent = currencyData.symbol;
+                
+            } catch(e) {}
+        }
+
+        function solicitarCotizacion() {
+            try {
+                const typeInput = document.querySelector('input[name="cot_tipo"]:checked');
+                const typeName = typeInput.getAttribute('data-name');
+                
+                const disenoInput = document.querySelector('input[name="cot_diseno"]:checked');
+                const disenoName = disenoInput ? disenoInput.getAttribute('data-name') : 'No especificado';
+
+                const extrasElements = document.querySelectorAll('.cot-extra:checked');
+                const extras = Array.from(extrasElements).map(e => e.getAttribute('data-name'));
+                
+                const totalText = document.getElementById('cot-total').textContent;
+                const currSymbol = document.getElementById('cot-currency-label').textContent;
+                
+                let mensaje = `¡Hola! Me interesa iniciar un proyecto.\n\nHe utilizado el simulador de su sitio y esto es lo que requiero:\n- Tipo de Proyecto: ${typeName}\n- Nivel de Diseño: ${disenoName}`;
+                if(extras.length > 0) {
+                    mensaje += `\n- Funciones/Servicios extra: ${extras.join(', ')}`;
+                }
+                mensaje += `\n\nPresupuesto estimado mostrado: ${totalText} ${currSymbol}.\n\nEntiendo que es un estimado inicial. Me gustaría recibir más detalles y agendar una llamada.`;
+                
+                const textArea = document.getElementById('mensaje');
+                if(textArea) {
+                    textArea.value = mensaje;
+                    
+                    const select = document.getElementById('servicio');
+                    if(select) {
+                        if(typeName.includes('Web') || typeName.includes('Tienda')) select.value = 'web';
+                        else if(typeName.includes('Sistema')) select.value = 'software';
+                        else if(typeName.includes('Invitación')) select.value = 'invitacion';
+                        else select.value = 'otro';
+                    }
+                }
+                
+                const contactoSection = document.getElementById('contacto');
+                if(contactoSection) {
+                    contactoSection.scrollIntoView({behavior: 'smooth'});
+                    setTimeout(() => {
+                        if(textArea) {
+                            textArea.focus();
+                            textArea.classList.add('ring-2', 'ring-black', 'dark:ring-blue-500');
+                            setTimeout(() => textArea.classList.remove('ring-2', 'ring-black', 'dark:ring-blue-500'), 2000);
+                        }
+                    }, 800);
+                }
+            } catch(e) {}
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('cotizador')) {
+                detectCurrency();
+                updateQuote();
+                updatePlansPrices();
+            }
+        });
 
         // ==========================================
         // MÁQUINA DE ESCRIBIR
