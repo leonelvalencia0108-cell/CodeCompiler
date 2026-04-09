@@ -435,7 +435,7 @@
                             <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Soporte por correo (24-48h)</span></li>
                             <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Analíticas básicas de visitas</span></li>
                         </ul>
-                        <a href="#" id="link-basico" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Básico')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contratar Plan Básico</a>
+                        <button type="button" id="link-basico" onclick="handlePlanClick('basico', 'Básico')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contratar Plan Básico</button>
                     </div>
                     
                     <!-- Plan Profesional -->
@@ -455,7 +455,7 @@
                             <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-gray-300 dark:text-white font-medium">Soporte Prioritario (Chat/Email)</span></li>
                             <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-white dark:text-blue-400 shrink-0"></i> <span class="text-sm text-white font-bold bg-gray-800 dark:bg-blue-600 px-2 py-0.5 rounded">3 horas de mantenimiento/mes</span></li>
                         </ul>
-                        <a href="#" id="link-profesional" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Profesional')" class="block w-full py-4 px-4 bg-white text-black rounded-xl font-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform hover:scale-[1.02] text-center mt-auto">Contratar Profesional</a>
+                        <button type="button" id="link-profesional" onclick="handlePlanClick('profesional', 'Profesional')" class="block w-full py-4 px-4 bg-white text-black rounded-xl font-black hover:bg-gray-200 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 transform hover:scale-[1.02] text-center mt-auto">Contratar Profesional</button>
                     </div>
                     
                     <!-- Plan Enterprise -->
@@ -474,7 +474,7 @@
                             <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-700 dark:text-gray-300 font-medium">Consultoría Técnica (1h/mes)</span></li>
                             <li class="flex items-start gap-3"><i data-lucide="check" class="w-5 h-5 text-black dark:text-blue-500 shrink-0"></i> <span class="text-sm text-gray-900 dark:text-white font-bold bg-yellow-200 dark:bg-blue-900/40 px-2 py-0.5 rounded">Resolución ilimitada de bugs</span></li>
                         </ul>
-                        <a href="#" id="link-enterprise" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Enterprise')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contactar Ventas</a>
+                        <button type="button" id="link-enterprise" onclick="handlePlanClick('enterprise', 'Enterprise')" class="block w-full py-4 px-4 border-2 border-gray-200 dark:border-[#262626] text-gray-900 dark:text-white rounded-xl font-bold hover:border-black hover:text-black dark:hover:bg-[#000000] transition-all duration-300 text-center mt-auto">Contactar Ventas</button>
                     </div>
                 </div>
             </div>
@@ -823,6 +823,97 @@
     <!-- MODALES DEL SISTEMA -->
     <!-- ========================================================================= -->
     
+    <!-- DEMO SERVICIOS Modal -->
+    <div id="modal-overlay" onclick="if(event.target === this) closeModal()" class="hidden fixed inset-0 z-[105] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md animate-fade-in-up">
+        <div class="bg-white dark:bg-[#0a0a0a] border border-transparent dark:border-[#262626] w-full max-w-2xl rounded-3xl shadow-2xl relative overflow-hidden">
+            <!-- Barra superior estilo Navegador -->
+            <div class="bg-gray-100 dark:bg-[#171717] border-b border-gray-200 dark:border-[#262626] px-4 py-3 flex items-center justify-between">
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-400"></div>
+                </div>
+                <div class="text-xs font-bold text-gray-500 bg-white dark:bg-[#0a0a0a] px-3 py-1 rounded-md shadow-sm border border-gray-200 dark:border-[#262626]">
+                    demo-interactiva.localhost
+                </div>
+                <button onclick="closeModal()" aria-label="Cerrar demo" class="text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 md:p-8">
+                <!-- DEMO WEB (Tienda) -->
+                <div id="demo-web" class="hidden">
+                    <div class="flex justify-between items-center mb-6 border-b border-gray-100 dark:border-[#262626] pb-4">
+                        <h3 class="font-black text-xl text-gray-900 dark:text-white">Mi Tienda Online</h3>
+                        <div class="relative">
+                            <i data-lucide="shopping-cart" class="w-6 h-6 text-gray-700 dark:text-gray-300"></i>
+                            <span id="cart-badge" class="hidden absolute -top-2 -right-2 bg-black dark:bg-blue-600 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">0</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="bg-gray-50 dark:bg-[#171717] p-5 rounded-2xl border border-gray-200 dark:border-[#262626] text-center">
+                            <div class="bg-gray-200 dark:bg-[#262626] h-32 rounded-xl mb-4 flex items-center justify-center">
+                                <i data-lucide="image" class="w-8 h-8 text-gray-400 dark:text-gray-500"></i>
+                            </div>
+                            <h4 class="font-bold text-gray-900 dark:text-white mb-1">Producto de Ejemplo</h4>
+                            <p class="text-sm font-black text-gray-500 dark:text-gray-400 mb-4">$1,299 MXN</p>
+                            <button id="btn-add-cart" class="w-full bg-black dark:bg-blue-600 text-white py-3 rounded-xl text-sm font-bold flex justify-center items-center gap-2 transition-colors shadow-md hover:bg-gray-800 dark:hover:bg-blue-700">
+                                <i data-lucide="plus" class="w-4 h-4"></i> Agregar al Carrito
+                            </button>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            <h4 class="font-bold text-gray-900 dark:text-white mb-2">Simulación en tiempo real</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 leading-relaxed">Esta es una demostración de interactividad en una tienda online. Al hacer clic en el botón, nota cómo el contador del carrito se actualiza instantáneamente sin necesidad de recargar la página gracias al uso de JavaScript moderno.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEMO SYSTEM (Software a medida) -->
+                <div id="demo-system" class="hidden">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="font-black text-xl text-gray-900 dark:text-white">Panel de Administración</h3>
+                        <span class="text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-md">Sistema Online</span>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="p-5 bg-gray-50 dark:bg-[#171717] rounded-2xl border border-gray-200 dark:border-[#262626]">
+                            <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Ventas del Mes</p>
+                            <p class="text-3xl font-black text-gray-900 dark:text-white">$45,200</p>
+                            <p class="text-xs text-green-600 dark:text-green-400 font-bold mt-2"><i data-lucide="trending-up" class="w-3 h-3 inline"></i> +12% vs mes anterior</p>
+                        </div>
+                        <div class="p-5 bg-gray-50 dark:bg-[#171717] rounded-2xl border border-gray-200 dark:border-[#262626]">
+                            <p class="text-xs text-gray-500 uppercase tracking-widest font-bold mb-1">Nuevos Usuarios</p>
+                            <p class="text-3xl font-black text-gray-900 dark:text-white">1,204</p>
+                            <p class="text-xs text-blue-600 dark:text-blue-400 font-bold mt-2"><i data-lucide="users" class="w-3 h-3 inline"></i> Actividad normal</p>
+                        </div>
+                    </div>
+                    <button id="btn-report" class="w-full bg-black dark:bg-blue-600 text-white py-4 rounded-xl text-sm font-bold flex justify-center items-center gap-2 transition-colors shadow-lg hover:bg-gray-800 dark:hover:bg-blue-700">
+                        <span id="report-text" class="flex items-center gap-2"><i data-lucide="download" class="w-5 h-5"></i> Generar Reporte Financiero PDF</span>
+                    </button>
+                </div>
+
+                <!-- DEMO INVITATION (Invitación Digital) -->
+                <div id="demo-invitation" class="hidden">
+                    <div class="text-center p-8 sm:p-12 bg-orange-50/50 dark:bg-[#111] rounded-3xl border-2 border-orange-100 dark:border-[#333] relative overflow-hidden">
+                        <!-- Elemento decorativo floral simulado -->
+                        <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-orange-200 via-orange-300 to-orange-200 opacity-60"></div>
+                        <i data-lucide="flower-2" class="w-8 h-8 text-orange-300 dark:text-gray-600 mx-auto mb-4"></i>
+                        <p class="text-xs font-serif uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400 mb-4">¡Estás formalmente invitado!</p>
+                        <h3 class="font-serif text-4xl sm:text-5xl font-bold mb-3 text-gray-900 dark:text-white">María & Juan</h3>
+                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-8 font-serif italic">Sábado, 15 de Noviembre de 2026</p>
+                        
+                        <div class="max-w-xs mx-auto">
+                            <button id="btn-rsvp" class="w-full bg-black dark:bg-blue-600 text-white px-8 py-4 rounded-full text-sm font-bold flex justify-center items-center gap-2 transition-colors shadow-xl hover:bg-gray-800 dark:hover:bg-blue-700">
+                                <i id="rsvp-icon" data-lucide="check" class="hidden w-5 h-5"></i>
+                                <span id="rsvp-text">Confirmar Asistencia</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- AUTH Modal -->
     <div id="auth-modal-overlay" onclick="if(event.target === this) closeAuthModal()" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md animate-fade-in-up">
         <div class="bg-white dark:bg-[#0a0a0a] border dark:border-[#262626] w-full max-w-md rounded-3xl shadow-2xl relative">
@@ -897,9 +988,9 @@
                     </ul>
                 </div>
                 
-                <a href="#" id="link-promo" target="_blank" rel="noreferrer" onclick="registrarIntentoCompra('Profesional')" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 shadow-lg flex justify-center items-center gap-2">
+                <button type="button" id="link-promo" onclick="handlePlanClick('profesional', 'Profesional')" class="w-full bg-blue-600 text-white py-4 rounded-xl font-bold hover:bg-blue-700 shadow-lg flex justify-center items-center gap-2">
                     <i data-lucide="zap" class="w-5 h-5"></i> Actualizar Ahora
-                </a>
+                </button>
                 <button onclick="closePromoModal()" class="mt-5 text-sm font-bold text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">Quizás más tarde</button>
             </div>
         </div>
@@ -1127,6 +1218,9 @@
 
     <!-- SCRIPT BLINDADO (CRASH-PROOF) -->
     <script>
+        // VARIABLE GLOBAL DE ESTADO DE SESIÓN
+        let currentUserSession = null;
+
         // ==========================================
         // ENLACES DE MERCADO PAGO (CONFIGURACIÓN)
         // ==========================================
@@ -1136,18 +1230,25 @@
             enterprise: "https://www.mercadopago.com.mx/subscriptions/checkout?preapproval_plan_id=4350308d808b48feb09fc78397a459ef"
         };
 
+        // Función para procesar clicks en planes
+        function handlePlanClick(planId, planName) {
+            if (!currentUserSession) {
+                openAuthModal();
+                const authTitle = document.getElementById('auth-title');
+                const authSubtitle = document.getElementById('auth-subtitle');
+                if (authTitle) authTitle.textContent = 'Inicia sesión para contratar';
+                if (authSubtitle) authSubtitle.textContent = 'Debes tener una cuenta para adquirir un plan de hosting.';
+                return;
+            }
+            
+            registrarIntentoCompra(planName);
+            if (PAYMENT_LINKS[planId]) {
+                window.open(PAYMENT_LINKS[planId], '_blank');
+            }
+        }
+
         // Inyectar los links en el DOM de forma segura
         document.addEventListener('DOMContentLoaded', () => {
-            const linkBasico = document.getElementById('link-basico');
-            const linkProf = document.getElementById('link-profesional');
-            const linkEnt = document.getElementById('link-enterprise');
-            const linkPromo = document.getElementById('link-promo');
-            
-            if(linkBasico) linkBasico.href = PAYMENT_LINKS.basico;
-            if(linkProf) linkProf.href = PAYMENT_LINKS.profesional;
-            if(linkEnt) linkEnt.href = PAYMENT_LINKS.enterprise;
-            if(linkPromo) linkPromo.href = PAYMENT_LINKS.profesional;
-            
             const yearSpan = document.getElementById('current-year');
             if (yearSpan) yearSpan.textContent = new Date().getFullYear();
         });
@@ -1816,6 +1917,17 @@
         if (contactFormEl) {
             contactFormEl.addEventListener('submit', async (e) => {
                 e.preventDefault();
+
+                // Validación de sesión activa
+                if (!currentUserSession) {
+                    openAuthModal();
+                    const authTitle = document.getElementById('auth-title');
+                    const authSubtitle = document.getElementById('auth-subtitle');
+                    if(authTitle) authTitle.textContent = 'Inicia sesión para enviar';
+                    if(authSubtitle) authSubtitle.textContent = 'Necesitas una cuenta para enviar solicitudes de presupuesto.';
+                    return;
+                }
+
                 const btn = document.getElementById('submit-btn');
                 const originalHTML = btn.innerHTML;
                 
@@ -2103,6 +2215,8 @@
         // ==========================================
         function updateAuthUI(session) {
             try {
+                currentUserSession = session; // Actualizamos la variable global
+
                 if (session) {
                     const displayName = session.user.user_metadata?.full_name || session.user.email;
                     const initial = displayName.charAt(0).toUpperCase();
@@ -2323,6 +2437,16 @@
 
         function solicitarCotizacion() {
             try {
+                // Validación de sesión activa para el cotizador
+                if (!currentUserSession) {
+                    openAuthModal();
+                    const authTitle = document.getElementById('auth-title');
+                    const authSubtitle = document.getElementById('auth-subtitle');
+                    if (authTitle) authTitle.textContent = 'Inicia sesión para cotizar';
+                    if (authSubtitle) authSubtitle.textContent = 'Necesitamos que inicies sesión para procesar y guardar tu cotización.';
+                    return;
+                }
+
                 const typeInput = document.querySelector('input[name="cot_tipo"]:checked');
                 const typeName = typeInput.getAttribute('data-name');
                 
