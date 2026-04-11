@@ -37,9 +37,6 @@
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Supabase JS Client -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
         body { font-family: 'Inter', sans-serif; transition: background-color 0.3s, color 0.3s; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -1216,9 +1213,38 @@
         </div>
     </div>
 
-    <!-- SCRIPT BLINDADO (CRASH-PROOF) -->
+    <!-- ANUNCIO NUEVO SERVICIO: CODETRANSLATOR -->
+    <div id="translator-promo-banner" class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-[9990] transform translate-y-[150%] opacity-0 transition-all duration-700 max-w-sm w-[calc(100%-2rem)]">
+        <div class="bg-white dark:bg-[#0a0a0a] border border-blue-200 dark:border-[#262626] rounded-2xl shadow-2xl p-5 relative overflow-hidden group">
+            <!-- Barra lateral decorativa -->
+            <div class="absolute top-0 left-0 w-1.5 h-full bg-blue-600"></div>
+            
+            <button onclick="closeTranslatorBanner()" class="absolute top-3 right-3 text-gray-400 hover:text-black dark:hover:text-white transition-colors" aria-label="Cerrar anuncio">
+                <i data-lucide="x" class="w-4 h-4"></i>
+            </button>
+            
+            <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 text-blue-600 dark:text-blue-400">
+                    <i data-lucide="languages" class="w-5 h-5"></i>
+                </div>
+                <div>
+                    <span class="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 mb-1">¡Novedad!</span>
+                    <h4 class="text-sm font-bold text-gray-900 dark:text-white mb-1">CodeTranslator</h4>
+                    <p class="text-xs text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">Traduce tu software <strong class="text-gray-800 dark:text-gray-300">en vivo</strong>, sin límite de palabras y totalmente <strong class="text-blue-600 dark:text-blue-400">gratis</strong>.</p>
+                    <button onclick="tryTranslator()" class="text-xs font-bold bg-black dark:bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-blue-700 transition-colors shadow-md flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Usar Gratis
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT MIGRADOS PARA POSTGREST/TAILSCALE -->
     <script>
-        // VARIABLE GLOBAL DE ESTADO DE SESIÓN
+        // ==========================================
+        // CONFIGURACIÓN E INICIALIZACIÓN (POSTGREST)
+        // ==========================================
+        const API_URL = 'http://100.107.215.113:3000';
         let currentUserSession = null;
 
         // ==========================================
@@ -1230,7 +1256,6 @@
             enterprise: "https://www.mercadopago.com.mx/subscriptions/checkout?preapproval_plan_id=4350308d808b48feb09fc78397a459ef"
         };
 
-        // Función para procesar clicks en planes
         function handlePlanClick(planId, planName) {
             if (!currentUserSession) {
                 openAuthModal();
@@ -1247,10 +1272,17 @@
             }
         }
 
-        // Inyectar los links en el DOM de forma segura
         document.addEventListener('DOMContentLoaded', () => {
             const yearSpan = document.getElementById('current-year');
             if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+            
+            // Cargar sesión de API PostgREST Local
+            const stored = localStorage.getItem('auth_session');
+            if (stored) {
+                updateAuthUI(JSON.parse(stored));
+            } else {
+                updateAuthUI(null);
+            }
         });
 
         // ==========================================
@@ -1293,18 +1325,6 @@
             try { if (typeof lucide !== 'undefined') lucide.createIcons(); } catch (e) {}
         }
         updateIcons();
-
-        // ==========================================
-        // INICIALIZACIÓN DE SUPABASE
-        // ==========================================
-        const supabaseUrl = 'https://cidhaaqtenidupftruvm.supabase.co'; 
-        const supabaseKey = 'sb_publishable_VO_mKTOnWA8Kiyr6UaLPrQ_rjvz0xgZ';
-        let supabaseClient = null;
-        try {
-            if (typeof window.supabase !== 'undefined') {
-                supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-            }
-        } catch(e) {}
 
         // ==========================================
         // UI & NAVEGACIÓN (SCROLL SPY Y SMOOTH SCROLL)
@@ -1470,45 +1490,34 @@
         }
 
         // ==========================================
-        // ENLACES DE PAGO E INTEGRACIÓN CON SUPABASE
+        // ACTUALIZACIÓN DE DATOS - API LOCAL POSTGREST
         // ==========================================
         async function registrarIntentoCompra(plan) {
             try {
                 showLoader();
                 
-                // Fallback de seguridad local (navegador)
+                // Fallback de seguridad local
                 localStorage.setItem('userPurchasedPlan', plan);
                 
                 const promoOverlay = document.getElementById('promo-modal-overlay');
                 if(promoOverlay) promoOverlay.classList.add('hidden');
 
-                // 1. Sincronizar plan en la NUBE (Tabla 'perfiles' de Supabase)
-                if (supabaseClient) {
-                    const { data: { session } } = await supabaseClient.auth.getSession();
-                    if (session) {
-                        // Guardar en la tabla pública 'perfiles'
-                        const { error: dbError } = await supabaseClient.from('perfiles')
-                            .update({ plan_actual: plan })
-                            .eq('id', session.user.id);
-                            
-                        // Respaldar también en metadatos para UI ultra-rápida
-                        const { error } = await supabaseClient.auth.updateUser({ 
-                            data: { plan_actual: plan } 
-                        });
-                        
-                        if (dbError && !String(dbError.message).includes('Fetch')) {
-                            console.error("Error actualizando tabla perfiles:", dbError);
-                        }
-                    }
-                }
-
-                // 2. Sincronizar en la sesión de demostración (si aplica)
-                let demoSession = localStorage.getItem('demo_session');
-                if (demoSession) {
-                    let parsed = JSON.parse(demoSession);
-                    if(!parsed.user.user_metadata) parsed.user.user_metadata = {};
-                    parsed.user.user_metadata.plan_actual = plan;
-                    localStorage.setItem('demo_session', JSON.stringify(parsed));
+                // Sincronizar plan mediante PATCH a la nueva tabla usuarios
+                if (currentUserSession) {
+                    const res = await fetch(`${API_URL}/usuarios?id=eq.${currentUserSession.user.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({ planes_activos: plan })
+                    });
+                    
+                    if (!res.ok) console.error("Error actualizando tabla usuarios:", await res.text());
+                    
+                    // Actualizar sesión local para UI rápida
+                    currentUserSession.user.user_metadata.planes_activos = plan;
+                    localStorage.setItem('auth_session', JSON.stringify(currentUserSession));
                 }
 
                 await loadUserProfile();
@@ -1639,7 +1648,7 @@
         } catch(e) {}
 
         // ==========================================
-        // GESTIÓN DE PERFIL DEL USUARIO CON SUPABASE
+        // GESTIÓN DE PERFIL DEL USUARIO (POSTGREST)
         // ==========================================
         async function openProfileModal() {
             try {
@@ -1692,7 +1701,7 @@
                 if (tabId === 'support' && tSup) tSup.classList.remove('hidden');
                 if (tabId === 'admin' && tAdmin) {
                     tAdmin.classList.remove('hidden');
-                    loadAdminUsers(); // Cargamos la tabla visual desde Supabase
+                    loadAdminUsers(); // Cargar tabla
                 }
             } catch(e) {}
         }
@@ -1726,97 +1735,89 @@
             updateIcons();
             
             try {
-                if (supabaseClient) {
-                    // Extraer a todos los usuarios de la tabla perfiles, ordenados por los más recientes
-                    const { data, error } = await supabaseClient.from('perfiles').select('*').order('created_at', { ascending: false });
-                    if (error) throw error;
-                    
-                    if (data && data.length > 0) {
-                        tbody.innerHTML = '';
-                        data.forEach(user => {
-                            const date = new Date(user.created_at).toLocaleDateString('es-MX', {day: '2-digit', month: 'short', year: 'numeric'});
-                            const planColor = user.plan_actual === 'Gratuito' ? 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border border-gray-200 dark:border-gray-700' : 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50';
-                            
-                            tbody.innerHTML += `
-                                <tr class="hover:bg-gray-50 dark:hover:bg-[#171717] transition-colors group">
-                                    <td class="px-4 py-3">
-                                        <p class="font-bold text-gray-900 dark:text-white truncate max-w-[120px] sm:max-w-xs">${user.nombre || 'Sin Nombre'}</p>
-                                        <p class="text-[10px] text-gray-400 uppercase tracking-wider">${date}</p>
-                                    </td>
-                                    <td class="px-4 py-3">
-                                        <p class="text-xs text-gray-600 dark:text-gray-300 truncate max-w-[120px] sm:max-w-xs">${user.email}</p>
-                                        <p class="text-[10px] text-gray-400 truncate max-w-[120px] sm:max-w-xs">Región: ${user.region || 'No especificada'}</p>
-                                    </td>
-                                    <td class="px-4 py-3 text-right sm:text-left">
-                                        <span class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${planColor}">${user.plan_actual}</span>
-                                    </td>
-                                </tr>
-                            `;
-                        });
-                    } else {
-                        tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500 text-xs font-bold">No hay usuarios registrados en Supabase.</td></tr>';
-                    }
+                // FETCH A POSTGREST (Ordenando por la nueva columna fecha_creacion)
+                const res = await fetch(`${API_URL}/usuarios?order=fecha_creacion.desc`);
+                if (!res.ok) throw new Error("Fallo al contactar servidor API");
+                const data = await res.json();
+                
+                if (data && data.length > 0) {
+                    tbody.innerHTML = '';
+                    data.forEach(user => {
+                        // Mapeo seguro a tus columnas personalizadas
+                        const rawDate = user.fecha_creacion ? new Date(user.fecha_creacion) : new Date();
+                        const date = rawDate.toLocaleDateString('es-MX', {day: '2-digit', month: 'short', year: 'numeric'});
+                        const activePlan = user.planes_activos || 'Gratuito';
+                        const planColor = activePlan === 'Gratuito' ? 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 border border-gray-200 dark:border-gray-700' : 'bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 border border-blue-200 dark:border-blue-800/50';
+                        
+                        tbody.innerHTML += `
+                            <tr class="hover:bg-gray-50 dark:hover:bg-[#171717] transition-colors group">
+                                <td class="px-4 py-3">
+                                    <p class="font-bold text-gray-900 dark:text-white truncate max-w-[120px] sm:max-w-xs">${user.nombre || 'Sin Nombre'}</p>
+                                    <p class="text-[10px] text-gray-400 uppercase tracking-wider">${date}</p>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <p class="text-xs text-gray-600 dark:text-gray-300 truncate max-w-[120px] sm:max-w-xs">${user.correo_electronico}</p>
+                                    <p class="text-[10px] text-gray-400 truncate max-w-[120px] sm:max-w-xs">Región: ${user.region || 'No especificada'}</p>
+                                </td>
+                                <td class="px-4 py-3 text-right sm:text-left">
+                                    <span class="inline-block px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider ${planColor}">${activePlan}</span>
+                                </td>
+                            </tr>
+                        `;
+                    });
                 } else {
-                    tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500 text-xs font-bold">Conexión a Supabase inactiva.</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-gray-500 text-xs font-bold">No hay usuarios registrados en el servidor.</td></tr>';
                 }
             } catch(e) {
                 console.error("Error Admin:", e);
-                tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-red-500 text-xs font-bold">Error al leer la tabla. Intenta recargar la página.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" class="px-4 py-8 text-center text-red-500 text-xs font-bold">Error al leer la tabla de tu servidor API. Verifique su red Tailscale.</td></tr>';
             }
             updateIcons();
         }
 
         async function loadUserProfile() {
             try {
-                let sessionData = null;
-                
-                if (supabaseClient) {
-                    const { data: { session } } = await supabaseClient.auth.getSession();
-                    sessionData = session;
-                }
-                
-                if (!sessionData) {
-                    let demoSession = localStorage.getItem('demo_session');
-                    if (demoSession) sessionData = JSON.parse(demoSession);
-                }
-                
-                if (sessionData) {
-                    const user = sessionData.user;
+                if (currentUserSession) {
+                    const user = currentUserSession.user;
                     let dbProfile = {};
                     
-                    // LECTURA DESDE LA TABLA 'PERFILES'
-                    if (supabaseClient) {
-                        const { data } = await supabaseClient.from('perfiles')
-                            .select('*')
-                            .eq('id', user.id)
-                            .single();
-                        if (data) dbProfile = data;
+                    // LECTURA DESDE LA NUEVA TABLA 'usuarios'
+                    try {
+                        const res = await fetch(`${API_URL}/usuarios?id=eq.${user.id}`);
+                        if(res.ok) {
+                            const data = await res.json();
+                            if(data && data.length > 0) dbProfile = data[0];
+                        }
+                    } catch(err) {
+                        console.warn("No se pudo obtener el perfil de PostgREST, usando caché", err);
                     }
 
                     const metadata = user.user_metadata || {};
                     
+                    // Mapeo adaptado al nuevo esquema de columnas
                     const currentName = dbProfile.nombre || metadata.full_name || '';
                     const currentPhone = dbProfile.telefono || metadata.phone || '';
-                    const currentCompany = dbProfile.empresa || metadata.company || '';
-                    const currentPlan = dbProfile.plan_actual || metadata.plan_actual || localStorage.getItem('userPurchasedPlan') || 'Gratuito';
+                    const currentCompany = dbProfile.nombre_empresa || metadata.company || '';
+                    const currentPlan = dbProfile.planes_activos || metadata.planes_activos || localStorage.getItem('userPurchasedPlan') || 'Gratuito';
+                    const currentEmail = dbProfile.correo_electronico || user.email;
                     
                     const mailEl = document.getElementById('profile-email');
                     const nameEl = document.getElementById('profile-name');
                     const phoneEl = document.getElementById('profile-phone');
                     const compEl = document.getElementById('profile-company');
                     
-                    if(mailEl) mailEl.value = dbProfile.email || user.email;
+                    if(mailEl) mailEl.value = currentEmail;
                     if(nameEl) nameEl.value = currentName;
                     if(phoneEl) phoneEl.value = currentPhone;
                     if(compEl) compEl.value = currentCompany;
                     
-                    const displayName = currentName || user.email;
+                    const displayName = currentName || currentEmail;
                     const headerName = document.getElementById('profile-header-name');
                     const headerEmail = document.getElementById('profile-header-email');
                     const avatar = document.getElementById('profile-avatar-initial');
                     
                     if(headerName) headerName.textContent = displayName;
-                    if(headerEmail) headerEmail.textContent = dbProfile.email || user.email;
+                    if(headerEmail) headerEmail.textContent = currentEmail;
                     if(avatar) avatar.textContent = displayName.charAt(0).toUpperCase();
                     
                     const badgePlan = document.getElementById('profile-plan-badge');
@@ -1846,33 +1847,28 @@
                 };
 
                 try {
-                    if (supabaseClient) {
-                        const { data: { session } } = await supabaseClient.auth.getSession();
-                        if (session) {
-                            // ESCRITURA DIRECTA EN LA TABLA 'PERFILES'
-                            const { error: dbError } = await supabaseClient.from('perfiles')
-                                .update({
-                                    nombre: updates.full_name,
-                                    telefono: updates.phone,
-                                    empresa: updates.company
-                                })
-                                .eq('id', session.user.id);
-                            
-                            if (dbError && !String(dbError.message).includes('Fetch')) throw dbError;
-                            
-                            // Respaldar en metadata
-                            await supabaseClient.auth.updateUser({ data: updates });
-                        }
-                    }
-
-                    let demoSession = localStorage.getItem('demo_session');
-                    if (demoSession) {
-                        let parsed = JSON.parse(demoSession);
-                        if(!parsed.user.user_metadata) parsed.user.user_metadata = {};
-                        parsed.user.user_metadata.full_name = updates.full_name;
-                        parsed.user.user_metadata.phone = updates.phone;
-                        parsed.user.user_metadata.company = updates.company;
-                        localStorage.setItem('demo_session', JSON.stringify(parsed));
+                    if (currentUserSession) {
+                        // ESCRITURA DIRECTA EN LA TABLA 'usuarios' MEDIANTE PATCH
+                        const res = await fetch(`${API_URL}/usuarios?id=eq.${currentUserSession.user.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Prefer': 'return=minimal'
+                            },
+                            body: JSON.stringify({
+                                nombre: updates.full_name,
+                                telefono: updates.phone,
+                                nombre_empresa: updates.company
+                            })
+                        });
+                        
+                        if(!res.ok) throw new Error("Fallo al guardar en el servidor API");
+                        
+                        // Actualizar metadata local
+                        currentUserSession.user.user_metadata.full_name = updates.full_name;
+                        currentUserSession.user.user_metadata.phone = updates.phone;
+                        currentUserSession.user.user_metadata.company = updates.company;
+                        localStorage.setItem('auth_session', JSON.stringify(currentUserSession));
                     }
 
                     hideLoader();
@@ -1881,14 +1877,7 @@
                     btn.classList.replace('dark:bg-blue-600', 'dark:bg-green-600');
                     updateIcons();
                     
-                    if (supabaseClient) {
-                        const { data: { session } } = await supabaseClient.auth.getSession();
-                        if(session) updateAuthUI(session);
-                        else if(demoSession) updateAuthUI(JSON.parse(localStorage.getItem('demo_session')));
-                    } else if(demoSession) {
-                        updateAuthUI(JSON.parse(localStorage.getItem('demo_session')));
-                    }
-                    
+                    updateAuthUI(currentUserSession);
                     loadUserProfile(); 
 
                     setTimeout(() => {
@@ -1902,7 +1891,7 @@
 
                 } catch(e) {
                     hideLoader();
-                    alert("Error al actualizar tu perfil. Inténtalo de nuevo.");
+                    alert("Error al actualizar tu perfil en el servidor API. Revisa la conexión Tailscale.");
                     btn.innerHTML = originalHTML;
                     btn.disabled = false;
                     updateIcons();
@@ -1911,7 +1900,7 @@
         }
 
         // ==========================================
-        // FORMULARIO DE CONTACTO (TABLA 'CONTACTOS')
+        // FORMULARIO DE CONTACTO (TABLA 'contactos')
         // ==========================================
         const contactFormEl = document.getElementById('contact-form');
         if (contactFormEl) {
@@ -1938,21 +1927,26 @@
                 showLoader();
                 
                 try {
-                    if(supabaseClient) {
-                        // GUARDAR MENSAJE EN TABLA 'CONTACTOS'
-                        const { error } = await supabaseClient.from('contactos').insert([{
-                            nombre: document.getElementById('nombre').value,
-                            email: document.getElementById('email').value,
-                            servicio: document.getElementById('servicio').value,
-                            mensaje: document.getElementById('mensaje').value
-                        }]);
-                        
-                        if (error) {
-                            console.error("Error detallado de Supabase al enviar contacto:", error);
-                            if (!String(error.message).includes('API key') && !String(error.message).includes('Fetch')) {
-                                throw error;
-                            }
-                        }
+                    // Mapeo a las columnas exactas de tu tabla 'contactos'
+                    const payload = {
+                        nombre: document.getElementById('nombre').value,
+                        correo_electronico: document.getElementById('email').value,
+                        servicio: document.getElementById('servicio').value,
+                        mensaje: document.getElementById('mensaje').value
+                    };
+
+                    const res = await fetch(`${API_URL}/contactos`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    
+                    if (!res.ok) {
+                        const errorData = await res.json();
+                        throw new Error(errorData.message || "Fallo en la inserción a base de datos");
                     }
                     
                     hideLoader();
@@ -1971,20 +1965,7 @@
                 } catch(error) {
                     hideLoader();
                     console.error("Catch Error en Contacto:", error);
-                    
-                    let msgError = "Hubo un problema de conexión con el servidor.";
-                    
-                    if (error && error.message) {
-                        if (error.message.includes('relation "contactos" does not exist')) {
-                            msgError = "Falta crear la tabla: La tabla 'contactos' no existe en tu Supabase.";
-                        } else if (error.message.includes('row-level security policy')) {
-                            msgError = "Faltan Permisos: Debes ejecutar la política (Policy) de RLS en Supabase para permitir envíos.";
-                        } else {
-                            msgError = "Error detallado: " + error.message;
-                        }
-                    }
-                    
-                    alert(msgError);
+                    alert("Hubo un problema de conexión con tu servidor API PostgREST: " + error.message);
                     
                     btn.innerHTML = originalHTML;
                     btn.disabled = false;
@@ -1995,7 +1976,7 @@
         }
 
         // ==========================================
-        // AUTENTICACIÓN (LOGIN/REGISTRO)
+        // AUTENTICACIÓN ADAPTADA PARA POSTGREST API
         // ==========================================
         let authMode = 'login'; 
 
@@ -2076,13 +2057,10 @@
         const translateError = (message) => {
             if (!message) return 'Error desconocido.';
             const msg = String(message);
-            if (msg.includes('Invalid login credentials')) return 'Correo o contraseña incorrectos.';
+            if (msg.includes('Invalid login credentials')) return 'Usuario no encontrado en la base de datos.';
             if (msg.includes('User already registered')) return 'Este correo ya tiene una cuenta registrada.';
-            if (msg.includes('Password should be at least')) return 'La contraseña debe tener al menos 6 caracteres.';
-            if (msg.includes('rate limit')) return 'Demasiados intentos. Por favor espera unos minutos.';
-            if (msg.includes('Email not confirmed')) return 'Revisa tu correo para verificar la cuenta.';
-            if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) return 'Error de red. Verifica la conexión.';
-            return `Error: ${msg}`;
+            if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) return 'Error de red. Verifica tu conexión a Tailscale (100.107.215.113).';
+            return `Error API: ${msg}`;
         };
 
         const authFormEl = document.getElementById('auth-form');
@@ -2095,8 +2073,9 @@
                 if(errorBox) errorBox.classList.add('hidden');
                 
                 const email = document.getElementById('auth-email').value;
-                const pass = document.getElementById('auth-password').value;
                 const name = document.getElementById('auth-name').value;
+                // La contraseña no se almacena en esta migración ya que PostgREST expone tablas y no es un Auth provider per se.
+                // En un entorno de prod, usarías funciones SQL/JWT. Aquí simulamos la sesión validando existencia en tabla `usuarios`.
                 
                 const btn = document.getElementById('auth-submit-btn');
                 const btnSpan = btn.querySelector('span');
@@ -2109,68 +2088,78 @@
                 showLoader();
 
                 try {
-                    if(supabaseClient) {
-                        let resError = null;
-                        if (authMode === 'login') {
-                            const { error } = await supabaseClient.auth.signInWithPassword({email, password: pass});
-                            resError = error;
-                        } else if (authMode === 'register') {
-                            // Crear Usuario en Auth de Supabase
-                            const { data, error } = await supabaseClient.auth.signUp({
-                                email, password: pass, options: { data: { full_name: name } }
-                            });
-                            resError = error;
-                            
-                            // MÉTODO A PRUEBA DE FALLOS: Inserción directa desde el código
-                            // Garantiza que el perfil se cree en la tabla 'perfiles' al instante
-                            if (!error && data?.user) {
-                                // Detectar la región automáticamente
-                                const userRegion = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Desconocida';
-                                
-                                const { error: profileError } = await supabaseClient.from('perfiles').insert([{
-                                    id: data.user.id,
-                                    nombre: name,
-                                    email: email,
-                                    plan_actual: 'Gratuito',
-                                    region: userRegion
-                                }]);
-                                
-                                if(profileError) {
-                                    console.error("Error forzando la creación del perfil:", profileError);
+                    let sessionData = null;
+
+                    if (authMode === 'login') {
+                        // Buscar en tabla `usuarios`
+                        const res = await fetch(`${API_URL}/usuarios?correo_electronico=eq.${encodeURIComponent(email)}`);
+                        if (!res.ok) throw new Error("Failed to fetch");
+                        const data = await res.json();
+                        
+                        if (data.length === 0) throw new Error("Invalid login credentials");
+                        
+                        sessionData = {
+                            user: {
+                                id: data[0].id,
+                                email: data[0].correo_electronico,
+                                user_metadata: {
+                                    full_name: data[0].nombre,
+                                    planes_activos: data[0].planes_activos
                                 }
                             }
-                        } else if (authMode === 'recover') {
-                            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                                redirectTo: window.location.origin + window.location.pathname,
-                            });
-                            resError = error;
+                        };
+                    } else if (authMode === 'register') {
+                        // Verificar duplicados
+                        const resCheck = await fetch(`${API_URL}/usuarios?correo_electronico=eq.${encodeURIComponent(email)}`);
+                        const dataCheck = await resCheck.json();
+                        if (dataCheck.length > 0) throw new Error("User already registered");
+
+                        const newId = crypto.randomUUID();
+                        const userRegion = Intl.DateTimeFormat().resolvedOptions().timeZone || 'Desconocida';
+                        
+                        // Insertar en tabla `usuarios` con los nombres de columna requeridos
+                        const resInsert = await fetch(`${API_URL}/usuarios`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Prefer': 'return=representation'
+                            },
+                            body: JSON.stringify({
+                                id: newId,
+                                nombre: name,
+                                correo_electronico: email,
+                                region: userRegion,
+                                planes_activos: 'Gratuito',
+                                tipo_usuario: 'cliente'
+                            })
+                        });
+
+                        if (!resInsert.ok) {
+                            const errData = await resInsert.json();
+                            throw new Error(errData.message || "Fallo insertando en BD");
                         }
                         
-                        // Fallback en caso de que la configuración de Supabase esté en pausa
-                        if (resError && (String(resError).includes('API key') || String(resError.message).includes('API key') || String(resError.message).includes('JWT') || String(resError.message).includes('Fetch'))) {
-                            console.warn("Simulando inicio de sesión local...");
-                            resError = null;
-                            if (authMode !== 'recover') {
-                                const simSession = { user: { email: email, user_metadata: { full_name: name || email } } };
-                                localStorage.setItem('demo_session', JSON.stringify(simSession));
-                                updateAuthUI(simSession);
-                            }
-                        } else if (resError) {
-                            throw resError;
-                        }
-                    } else {
-                        // Demo mode fallback puro
-                        if (authMode !== 'recover') {
-                            const simSession = { user: { email: email, user_metadata: { full_name: name || email } } };
-                            localStorage.setItem('demo_session', JSON.stringify(simSession));
-                            updateAuthUI(simSession);
-                        }
-                    }
+                        const inserted = await resInsert.json();
 
+                        sessionData = {
+                            user: {
+                                id: newId,
+                                email: email,
+                                user_metadata: {
+                                    full_name: name,
+                                    planes_activos: 'Gratuito'
+                                }
+                            }
+                        };
+                    } else if (authMode === 'recover') {
+                        // Simular recuperación de contraseña
+                        await new Promise(r => setTimeout(r, 1000));
+                    }
+                    
                     hideLoader();
 
                     if (authMode === 'recover') {
-                        btnSpan.innerHTML = '<i data-lucide="mail-check" class="w-5 h-5 inline-block align-middle mr-2"></i> ¡Enlace enviado!';
+                        btnSpan.innerHTML = '<i data-lucide="mail-check" class="w-5 h-5 inline-block align-middle mr-2"></i> ¡Instrucciones enviadas!';
                         btn.classList.replace('bg-black', 'bg-green-600');
                         btn.classList.replace('dark:bg-blue-600', 'dark:bg-green-600');
                         updateIcons();
@@ -2182,6 +2171,10 @@
                             setAuthMode('login'); 
                         }, 3000);
                     } else {
+                        // Guardar la sesión localmente y actualizar interfaz
+                        localStorage.setItem('auth_session', JSON.stringify(sessionData));
+                        updateAuthUI(sessionData);
+
                         btnSpan.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5 inline-block align-middle mr-2"></i> ¡Éxito!';
                         btn.classList.replace('bg-black', 'bg-green-600');
                         btn.classList.replace('dark:bg-blue-600', 'dark:bg-green-600');
@@ -2211,11 +2204,11 @@
         }
 
         // ==========================================
-        // PERSISTENCIA, SESIÓN Y ALGORITMO PROMOCIONAL
+        // UI DE SESIÓN Y ALGORITMO PROMOCIONAL
         // ==========================================
-        function updateAuthUI(session) {
+        async function updateAuthUI(session) {
             try {
-                currentUserSession = session; // Actualizamos la variable global
+                currentUserSession = session; 
 
                 if (session) {
                     const displayName = session.user.user_metadata?.full_name || session.user.email;
@@ -2238,28 +2231,22 @@
                     if(mus) mus.classList.remove('hidden');
                     if(mue) mue.textContent = displayName;
                     
-                    // --- ALGORITMO PROMOCIONAL (UPSELLING) BLINDADO CON LA TABLA EXTERNA ---
-                    let currentPlan = session.user.user_metadata?.plan_actual || localStorage.getItem('userPurchasedPlan') || 'Gratuito';
+                    // Verificación de Upselling desde PostgREST
+                    let currentPlan = session.user.user_metadata?.planes_activos || localStorage.getItem('userPurchasedPlan') || 'Gratuito';
                     
-                    if (supabaseClient) {
-                        supabaseClient.from('perfiles').select('plan_actual').eq('id', session.user.id).single()
-                        .then(({data}) => {
-                            if (data && data.plan_actual) currentPlan = data.plan_actual;
-                            
-                            if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
-                                setTimeout(() => {
-                                    showPromoModal();
-                                    sessionStorage.setItem('promoShown', 'true');
-                                }, 1500);
-                            }
-                        }).catch(e => console.log("Validación promo local."));
-                    } else {
-                        if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
-                            setTimeout(() => {
-                                showPromoModal();
-                                sessionStorage.setItem('promoShown', 'true');
-                            }, 1500);
+                    try {
+                        const res = await fetch(`${API_URL}/usuarios?id=eq.${session.user.id}&select=planes_activos`);
+                        if(res.ok) {
+                            const data = await res.json();
+                            if(data.length > 0 && data[0].planes_activos) currentPlan = data[0].planes_activos;
                         }
+                    } catch(e) { console.log("Validación promo con datos locales."); }
+                    
+                    if (currentPlan === 'Gratuito' && !sessionStorage.getItem('promoShown')) {
+                        setTimeout(() => {
+                            showPromoModal();
+                            sessionStorage.setItem('promoShown', 'true');
+                        }, 1500);
                     }
                     
                 } else {
@@ -2276,30 +2263,9 @@
             } catch(e) {}
         }
 
-        if (supabaseClient) {
-            supabaseClient.auth.getSession().then(({ data: { session } }) => {
-                if (!session) {
-                    let demoSession = localStorage.getItem('demo_session');
-                    if (demoSession) session = JSON.parse(demoSession);
-                }
-                updateAuthUI(session);
-            }).catch(e => {
-                let demoSession = localStorage.getItem('demo_session');
-                if (demoSession) updateAuthUI(JSON.parse(demoSession));
-            });
-
-            supabaseClient.auth.onAuthStateChange((event, session) => {
-                updateAuthUI(session);
-            });
-        } else {
-            let demoSession = localStorage.getItem('demo_session');
-            if (demoSession) updateAuthUI(JSON.parse(demoSession));
-        }
-
         async function logoutUser() {
             try {
-                localStorage.removeItem('demo_session');
-                if(supabaseClient) await supabaseClient.auth.signOut();
+                localStorage.removeItem('auth_session');
                 updateAuthUI(null);
                 
                 const profileModal = document.getElementById('profile-modal-overlay');
@@ -2537,10 +2503,46 @@
         typeWriter();
 
         // ==========================================
-        // BANNER DE COOKIES
+        // ALGORITMO: ANUNCIO CODETRANSLATOR
+        // ==========================================
+        function initTranslatorPromo() {
+            try {
+                const banner = document.getElementById('translator-promo-banner');
+                if (!banner) return;
+                
+                // Comprobar si ya lo vio (Persistencia en LocalStorage)
+                const hasSeen = localStorage.getItem('codeTranslatorBannerSeen');
+                
+                if (!hasSeen) {
+                    setTimeout(() => {
+                        banner.classList.remove('translate-y-[150%]', 'opacity-0');
+                        banner.classList.add('translate-y-0', 'opacity-100');
+                    }, 3500);
+                }
+            } catch(e) {}
+        }
+
+        function closeTranslatorBanner() {
+            const banner = document.getElementById('translator-promo-banner');
+            if (banner) {
+                banner.classList.remove('translate-y-0', 'opacity-100');
+                banner.classList.add('translate-y-[150%]', 'opacity-0');
+                localStorage.setItem('codeTranslatorBannerSeen', 'true');
+            }
+        }
+
+        function tryTranslator() {
+            closeTranslatorBanner();
+            window.open('https://leonelvalencia0108-cell.github.io/CodeTranslator/', '_blank');
+        }
+
+        // ==========================================
+        // BANNER DE COOKIES Y ARRANQUE DE PROMOS
         // ==========================================
         document.addEventListener("DOMContentLoaded", () => {
             try {
+                initTranslatorPromo();
+
                 const cookieBanner = document.getElementById('cookie-consent-banner');
                 const acceptBtn = document.getElementById('accept-cookies');
                 const declineBtn = document.getElementById('decline-cookies');
